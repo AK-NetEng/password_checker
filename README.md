@@ -97,3 +97,18 @@ cd REPO-NAME
 
 # 3. Open the file
 # Simply double-click 'index.html' to launch in browser!
+
+## 📂 Project Structure
+
+```text
+password_checker/
+│
+├── 📂 assets/
+│   ├── 📂 images/       # Screenshots (moved here)
+│   ├── 📂 css/          # Stylesheets
+│   └── 📂 js/           # Calculator Logic
+│
+├── 📄 index.html        # Main Application
+└── 📄 README.md         # Documentation (You are here)
+
+
