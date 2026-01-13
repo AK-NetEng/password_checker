@@ -1,0 +1,1526 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>IPv4 & IPv6 Subnet Calculator | Professional Subnetting Tool</title>
+    <meta name="description"
+        content="CIDR Netmask tool generates a list of IP Address Ranges that falls inside a given netmask along with an IP. Calculate IPv4 and IPv6 subnets professionally.">
+    <link rel="preconnect" href="https://fonts.googleapis.com">
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+    <link
+        href="https://fonts.googleapis.com/css2?family=Inter:wght@300;400;500;600;700;800;900&family=JetBrains+Mono:wght@400;500;600&display=swap"
+        rel="stylesheet">
+    <link rel="stylesheet" href="subnet-style.css">
+</head>
+
+<body>
+    <canvas id="particleCanvas"></canvas>
+    <div class="gradient-overlay"></div>
+
+    <div class="app-container">
+        <!-- Header -->
+        <header class="app-header">
+            <div class="logo-section">
+                <div class="logo-icon">
+                    <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2">
+                        <circle cx="12" cy="12" r="3" />
+                        <path
+                            d="M12 2v4M12 18v4M4.93 4.93l2.83 2.83M16.24 16.24l2.83 2.83M2 12h4M18 12h4M4.93 19.07l2.83-2.83M16.24 7.76l2.83-2.83" />
+                    </svg>
+                </div>
+                <div class="logo-text">
+                    <span class="title">Subnet<span class="highlight">Calculator</span></span>
+                    <span class="subtitle">Professional IPv4 & IPv6 Subnetting Tool</span>
+                </div>
+            </div>
+            <div class="header-right-section">
+                <!-- Navigation Links -->
+                <nav class="nav-links">
+                    <a href="password-strength.html" class="nav-link">🔐 Password</a>
+                    <a href="subnneting.html" class="nav-link active">🌐 Subnetting</a>
+                </nav>
+                <button class="theme-toggle" id="themeToggle">
+                    <svg class="sun-icon" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2">
+                        <circle cx="12" cy="12" r="5" />
+                        <line x1="12" y1="1" x2="12" y2="3" />
+                        <line x1="12" y1="21" x2="12" y2="23" />
+                        <line x1="4.22" y1="4.22" x2="5.64" y2="5.64" />
+                        <line x1="18.36" y1="18.36" x2="19.78" y2="19.78" />
+                        <line x1="1" y1="12" x2="3" y2="12" />
+                        <line x1="21" y1="12" x2="23" y2="12" />
+                        <line x1="4.22" y1="19.78" x2="5.64" y2="18.36" />
+                        <line x1="18.36" y1="5.64" x2="19.78" y2="4.22" />
+                    </svg>
+                    <svg class="moon-icon" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"
+                        style="display:none">
+                        <path d="M21 12.79A9 9 0 1 1 11.21 3 7 7 0 0 0 21 12.79z" />
+                    </svg>
+                </button>
+            </div>
+        </header>
+
+        <!-- Description Section -->
+        <section class="description-section glass-card">
+            <h2>📖 IP Subnet Calculator</h2>
+            <p class="description-text">
+                <strong>CIDR Netmask tool</strong> generates a list of IP Address Ranges that falls inside a given
+                netmask along with an IP.
+                Just enter <span class="highlight-text">IPv4</span> or <span class="highlight-text">IPv6</span> address
+                along with a netmask or CIDR,
+                and submit to generate the list of network IPs and the list of IPs that falls inside the given input
+                range.
+            </p>
+        </section>
+
+        <!-- Protocol Tabs -->
+        <div class="protocol-tabs">
+            <button class="tab-btn active" data-tab="ipv4">
+                <span class="tab-icon">🌐</span>
+                <span class="tab-text">IPv4 Subnetting</span>
+            </button>
+            <div class="tab-divider"></div>
+            <button class="tab-btn" data-tab="ipv6">
+                <span class="tab-icon">🔷</span>
+                <span class="tab-text">IPv6 Subnetting</span>
+            </button>
+        </div>
+
+        <!-- IPv4 Section -->
+        <main class="content-section" id="ipv4-section">
+            <div class="calculator-grid">
+                <!-- Input Panel -->
+                <section class="input-panel glass-card">
+                    <h2>📥 IPv4 Input</h2>
+                    <div class="input-group">
+                        <label>IP Address</label>
+                        <input type="text" id="ipv4-address" placeholder="192.168.1.0" maxlength="15">
+                    </div>
+
+                    <!-- IP Class Selection -->
+                    <div class="input-group">
+                        <label>Quick Select IP Class</label>
+                        <div class="class-buttons">
+                            <button class="class-btn" data-class="A" data-ip="10.0.0.0" data-cidr="8">Class A</button>
+                            <button class="class-btn" data-class="B" data-ip="172.16.0.0" data-cidr="16">Class
+                                B</button>
+                            <button class="class-btn" data-class="C" data-ip="192.168.1.0" data-cidr="24">Class
+                                C</button>
+                        </div>
+                    </div>
+
+                    <div class="input-group">
+                        <label>Subnet Mask / CIDR (1-32)</label>
+                        <div class="mask-input-row">
+                            <select id="ipv4-cidr">
+                                <option value="1">/1 (128.0.0.0) - 2,147,483,648 IPs</option>
+                                <option value="2">/2 (192.0.0.0) - 1,073,741,824 IPs</option>
+                                <option value="3">/3 (224.0.0.0) - 536,870,912 IPs</option>
+                                <option value="4">/4 (240.0.0.0) - 268,435,456 IPs</option>
+                                <option value="5">/5 (248.0.0.0) - 134,217,728 IPs</option>
+                                <option value="6">/6 (252.0.0.0) - 67,108,864 IPs</option>
+                                <option value="7">/7 (254.0.0.0) - 33,554,432 IPs</option>
+                                <option value="8">/8 (255.0.0.0) - 16,777,216 IPs</option>
+                                <option value="9">/9 (255.128.0.0) - 8,388,608 IPs</option>
+                                <option value="10">/10 (255.192.0.0) - 4,194,304 IPs</option>
+                                <option value="11">/11 (255.224.0.0) - 2,097,152 IPs</option>
+                                <option value="12">/12 (255.240.0.0) - 1,048,576 IPs</option>
+                                <option value="13">/13 (255.248.0.0) - 524,288 IPs</option>
+                                <option value="14">/14 (255.252.0.0) - 262,144 IPs</option>
+                                <option value="15">/15 (255.254.0.0) - 131,072 IPs</option>
+                                <option value="16">/16 (255.255.0.0) - 65,536 IPs</option>
+                                <option value="17">/17 (255.255.128.0) - 32,768 IPs</option>
+                                <option value="18">/18 (255.255.192.0) - 16,384 IPs</option>
+                                <option value="19">/19 (255.255.224.0) - 8,192 IPs</option>
+                                <option value="20">/20 (255.255.240.0) - 4,096 IPs</option>
+                                <option value="21">/21 (255.255.248.0) - 2,048 IPs</option>
+                                <option value="22">/22 (255.255.252.0) - 1,024 IPs</option>
+                                <option value="23">/23 (255.255.254.0) - 512 IPs</option>
+                                <option value="24" selected>/24 (255.255.255.0) - 256 IPs</option>
+                                <option value="25">/25 (255.255.255.128) - 128 IPs</option>
+                                <option value="26">/26 (255.255.255.192) - 64 IPs</option>
+                                <option value="27">/27 (255.255.255.224) - 32 IPs</option>
+                                <option value="28">/28 (255.255.255.240) - 16 IPs</option>
+                                <option value="29">/29 (255.255.255.248) - 8 IPs</option>
+                                <option value="30">/30 (255.255.255.252) - 4 IPs</option>
+                                <option value="31">/31 (255.255.255.254) - 2 IPs</option>
+                                <option value="32">/32 (255.255.255.255) - 1 IP</option>
+                            </select>
+                        </div>
+                    </div>
+                    <button class="calculate-btn" id="ipv4-calculate">
+                        <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2">
+                            <circle cx="11" cy="11" r="8" />
+                            <line x1="21" y1="21" x2="16.65" y2="16.65" />
+                        </svg>
+                        Calculate Subnet
+                    </button>
+                </section>
+
+                <!-- Results Panel -->
+                <section class="results-panel glass-card">
+                    <h2>📊 Subnet Details</h2>
+                    <div class="results-grid" id="ipv4-results">
+                        <div class="result-item"><span class="label">Network Address</span><span class="value"
+                                id="r-network">-</span></div>
+                        <div class="result-item"><span class="label">Broadcast Address</span><span class="value"
+                                id="r-broadcast">-</span></div>
+                        <div class="result-item"><span class="label">First Host</span><span class="value"
+                                id="r-first">-</span></div>
+                        <div class="result-item"><span class="label">Last Host</span><span class="value"
+                                id="r-last">-</span></div>
+                        <div class="result-item"><span class="label">Total Hosts</span><span class="value"
+                                id="r-hosts">-</span></div>
+                        <div class="result-item"><span class="label">Usable Hosts</span><span class="value"
+                                id="r-usable">-</span></div>
+                        <div class="result-item"><span class="label">Subnet Mask</span><span class="value"
+                                id="r-mask">-</span></div>
+                        <div class="result-item"><span class="label">Wildcard Mask</span><span class="value"
+                                id="r-wildcard">-</span></div>
+                        <div class="result-item highlight-result"><span class="label">IP Class</span><span class="value"
+                                id="r-class">-</span></div>
+                        <div class="result-item"><span class="label">IP Type</span><span class="value"
+                                id="r-type">-</span></div>
+                        <div class="result-item full"><span class="label">Binary Subnet Mask</span><span
+                                class="value mono" id="r-binary">-</span></div>
+                        <div class="result-item full"><span class="label">CIDR Notation</span><span class="value"
+                                id="r-cidr">-</span></div>
+                        <div class="result-item full"><span class="label">Binary Network Address</span><span
+                                class="value mono" id="r-binary-network">-</span></div>
+                    </div>
+                </section>
+            </div>
+
+            <!-- Subnets Table -->
+            <section class="subnets-table glass-card">
+                <h2>📋 All Subnets in this Network</h2>
+                <div class="table-container">
+                    <table id="ipv4-subnets-table">
+                        <thead>
+                            <tr>
+                                <th>#</th>
+                                <th>Network</th>
+                                <th>First Host</th>
+                                <th>Last Host</th>
+                                <th>Broadcast</th>
+                                <th>Hosts</th>
+                            </tr>
+                        </thead>
+                        <tbody id="ipv4-subnets-body"></tbody>
+                    </table>
+                </div>
+            </section>
+
+            <!-- FLSM & VLSM Calculator Section -->
+            <section class="flsm-vlsm-section glass-card">
+                <h2>🔧 FLSM & VLSM Subnet Calculator</h2>
+                <p class="section-description">Generate subnets based on your requirements. Choose FLSM for equal-sized
+                    subnets or VLSM for variable-sized subnets optimized for different host needs.</p>
+
+                <!-- Method Tabs -->
+                <div class="method-tabs">
+                    <button class="method-tab active" data-method="flsm">
+                        <span class="method-icon">📐</span>
+                        <span class="method-name">FLSM</span>
+                        <span class="method-desc">Fixed Length Subnet Mask</span>
+                    </button>
+                    <button class="method-tab" data-method="vlsm">
+                        <span class="method-icon">📊</span>
+                        <span class="method-name">VLSM</span>
+                        <span class="method-desc">Variable Length Subnet Mask</span>
+                    </button>
+                </div>
+
+                <!-- FLSM Calculator -->
+                <div class="method-content" id="flsm-content">
+                    <div class="flsm-grid">
+                        <div class="flsm-input-panel">
+                            <h3>📥 FLSM Input</h3>
+                            <div class="input-group">
+                                <label>Network IP Address</label>
+                                <input type="text" id="flsm-network" placeholder="192.168.0.0" maxlength="15">
+                            </div>
+                            <div class="input-group">
+                                <label>Original CIDR</label>
+                                <select id="flsm-original-cidr">
+                                    <option value="0">/0 (255.255.255.255) - 1 IP</option>
+                                    <option value="1">/1 (255.255.255.254) - 2 IPs</option>
+                                    <option value="2">/2 (255.255.255.252) - 4 IPs</option>
+                                    <option value="3">/3 (255.255.255.248) - 8 IPs</option>
+                                    <option value="4">/4 (255.255.255.240) - 16 IPs</option>
+                                    <option value="5">/5 (255.255.255.224) - 32 IPs</option>
+                                    <option value="6">/6 (255.255.255.192) - 64 IPs</option>
+                                    <option value="7">/7 (255.255.255.128) - 128 IPs</option>
+                                    <option value="8">/8 (255.0.0.0) - 16,777,216 IPs</option>
+                                    <option value="9">/9 (255.128.0.0) - 8,388,608 IPs</option>
+                                    <option value="10">/10 (255.192.0.0) - 4,194,304 IPs</option>
+                                    <option value="11">/11 (255.224.0.0) - 2,097,152 IPs</option>
+                                    <option value="12">/12 (255.240.0.0) - 1,048,576 IPs</option>
+                                    <option value="13">/13 (255.248.0.0) - 524,288 IPs</option>
+                                    <option value="14">/14 (255.252.0.0) - 262,144 IPs</option>
+                                    <option value="15">/15 (255.254.0.0) - 131,072 IPs</option>
+                                    <option value="16">/16 (255.255.0.0) - 65,536 IPs</option>
+                                    <option value="17">/17 (255.255.128.0) - 32,768 IPs</option>
+                                    <option value="18">/18 (255.255.192.0) - 16,384 IPs</option>
+                                    <option value="19">/19 (255.255.224.0) - 8,192 IPs</option>
+                                    <option value="20">/20 (255.255.240.0) - 4,096 IPs</option>
+                                    <option value="21">/21 (255.255.248.0) - 2,048 IPs</option>
+                                    <option value="22">/22 (255.255.252.0) - 1,024 IPs</option>
+                                    <option value="23">/23 (255.255.254.0) - 512 IPs</option>
+                                    <option value="24" selected>/24 (255.255.255.0) - 256 IPs</option>
+                                    <option value="25">/25 (255.255.255.128) - 128 IPs</option>
+                                    <option value="26">/26 (255.255.255.192) - 64 IPs</option>
+                                    <option value="27">/27 (255.255.255.224) - 32 IPs</option>
+                                    <option value="28">/28 (255.255.255.240) - 16 IPs</option>
+                                    <option value="29">/29 (255.255.255.248) - 8 IPs</option>
+                                    <option value="30">/30 (255.255.255.252) - 4 IPs</option>
+                                    <option value="31">/31 (255.255.255.254) - 2 IPs</option>
+                                    <option value="32">/32 (255.255.255.255) - 1 IP</option>
+                                </select>
+                            </div>
+
+                            <!-- FLSM Mode Toggle -->
+                            <div class="input-group">
+                                <label>FLSM Mode</label>
+                                <div class="flsm-mode-toggle">
+                                    <button class="flsm-mode-btn active" data-mode="strict">
+                                        <span class="mode-icon">📐</span>
+                                        <span class="mode-name">Strict FLSM</span>
+                                        <span class="mode-desc">By Subnets/Hosts Only</span>
+                                    </button>
+                                    <button class="flsm-mode-btn" data-mode="hybrid">
+                                        <span class="mode-icon">🔀</span>
+                                        <span class="mode-name">Hybrid FLSM</span>
+                                        <span class="mode-desc">Hosts + Subnet Count</span>
+                                    </button>
+                                </div>
+                            </div>
+
+                            <!-- Strict FLSM Inputs -->
+                            <div id="flsm-strict-inputs">
+                                <div class="input-group">
+                                    <label>Requirement Type</label>
+                                    <div class="requirement-toggle">
+                                        <button class="req-toggle-btn active" data-req="subnets">By Subnets</button>
+                                        <button class="req-toggle-btn" data-req="hosts">By Hosts</button>
+                                    </div>
+                                </div>
+                                <div class="input-group" id="flsm-subnets-group">
+                                    <label>Number of Subnets Needed</label>
+                                    <input type="number" id="flsm-subnets" placeholder="4" min="1" max="16777216">
+                                    <small class="input-hint">💡 Network will be divided into equal-sized
+                                        subnets</small>
+                                </div>
+                                <div class="input-group" id="flsm-hosts-group" style="display:none;">
+                                    <label>Number of Hosts per Subnet</label>
+                                    <input type="number" id="flsm-hosts" placeholder="50" min="1" max="16777214">
+                                    <small class="input-hint">💡 Calculates minimum CIDR to fit required hosts</small>
+                                </div>
+                            </div>
+
+                            <!-- Hybrid FLSM Inputs -->
+                            <div id="flsm-hybrid-inputs" style="display:none;">
+                                <div class="input-group">
+                                    <label>Hosts per Subnet</label>
+                                    <input type="number" id="flsm-hybrid-hosts" placeholder="30" min="1" max="16777214">
+                                    <small class="input-hint">💡 Each subnet will have capacity for this many
+                                        hosts</small>
+                                </div>
+                                <div class="input-group">
+                                    <label>Number of Subnets</label>
+                                    <input type="number" id="flsm-hybrid-subnets" placeholder="4" min="1"
+                                        max="16777216">
+                                    <small class="input-hint">💡 All subnets get the SAME mask (calculated from
+                                        hosts)</small>
+                                </div>
+                            </div>
+
+                            <button class="calculate-btn" id="flsm-calculate">
+                                <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2">
+                                    <path
+                                        d="M9 3H5a2 2 0 0 0-2 2v4m6-6h10a2 2 0 0 1 2 2v4M9 3v18m0 0h10a2 2 0 0 0 2-2V9M9 21H5a2 2 0 0 1-2-2V9m0 0h18" />
+                                </svg>
+                                Generate FLSM Subnets
+                            </button>
+                        </div>
+
+                        <div class="flsm-info-panel">
+                            <h3>ℹ️ FLSM Information</h3>
+                            <div class="info-box">
+                                <div class="info-row">
+                                    <span class="info-label">Bits Borrowed:</span>
+                                    <span class="info-value" id="flsm-bits-borrowed">-</span>
+                                </div>
+                                <div class="info-row">
+                                    <span class="info-label">New CIDR:</span>
+                                    <span class="info-value" id="flsm-new-cidr">-</span>
+                                </div>
+                                <div class="info-row">
+                                    <span class="info-label">New Subnet Mask:</span>
+                                    <span class="info-value" id="flsm-new-mask">-</span>
+                                </div>
+                                <div class="info-row">
+                                    <span class="info-label">Total Subnets Created:</span>
+                                    <span class="info-value" id="flsm-total-subnets">-</span>
+                                </div>
+                                <div class="info-row">
+                                    <span class="info-label">Hosts per Subnet:</span>
+                                    <span class="info-value" id="flsm-hosts-per-subnet">-</span>
+                                </div>
+                                <div class="info-row">
+                                    <span class="info-label">Usable Hosts:</span>
+                                    <span class="info-value" id="flsm-usable-hosts">-</span>
+                                </div>
+                                <div class="info-row">
+                                    <span class="info-label">Block Size:</span>
+                                    <span class="info-value" id="flsm-block-size">-</span>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+
+                    <!-- FLSM Results Table -->
+                    <div class="flsm-results" id="flsm-results" style="display:none;">
+                        <h3>📋 FLSM Subnet Allocation</h3>
+                        <div class="table-container">
+                            <table class="flsm-table">
+                                <thead>
+                                    <tr>
+                                        <th>Subnet #</th>
+                                        <th>Network Address</th>
+                                        <th>Subnet Mask</th>
+                                        <th>First Host</th>
+                                        <th>Last Host</th>
+                                        <th>Broadcast</th>
+                                        <th>Usable Hosts</th>
+                                    </tr>
+                                </thead>
+                                <tbody id="flsm-table-body"></tbody>
+                            </table>
+                        </div>
+                    </div>
+                </div>
+
+                <!-- VLSM Calculator -->
+                <div class="method-content" id="vlsm-content" style="display:none;">
+                    <div class="vlsm-grid">
+                        <div class="vlsm-input-panel">
+                            <h3>📥 VLSM Input</h3>
+                            <div class="input-group">
+                                <label>Network IP Address</label>
+                                <input type="text" id="vlsm-network" placeholder="192.168.1.0" maxlength="15">
+                            </div>
+                            <div class="input-group">
+                                <label>Original CIDR</label>
+                                <select id="vlsm-original-cidr">
+                                    <option value="0">/0 (255.255.255.255) - 1 IP</option>
+                                    <option value="1">/1 (255.255.255.254) - 2 IPs</option>
+                                    <option value="2">/2 (255.255.255.252) - 4 IPs</option>
+                                    <option value="3">/3 (255.255.255.248) - 8 IPs</option>
+                                    <option value="4">/4 (255.255.255.240) - 16 IPs</option>
+                                    <option value="5">/5 (255.255.255.224) - 32 IPs</option>
+                                    <option value="6">/6 (255.255.255.192) - 64 IPs</option>
+                                    <option value="7">/7 (255.255.255.128) - 128 IPs</option>
+                                    <option value="8">/8 (255.0.0.0) - 16,777,216 IPs</option>
+                                    <option value="9">/9 (255.128.0.0) - 8,388,608 IPs</option>
+                                    <option value="10">/10 (255.192.0.0) - 4,194,304 IPs</option>
+                                    <option value="11">/11 (255.224.0.0) - 2,097,152 IPs</option>
+                                    <option value="12">/12 (255.240.0.0) - 1,048,576 IPs</option>
+                                    <option value="13">/13 (255.248.0.0) - 524,288 IPs</option>
+                                    <option value="14">/14 (255.252.0.0) - 262,144 IPs</option>
+                                    <option value="15">/15 (255.254.0.0) - 131,072 IPs</option>
+                                    <option value="16">/16 (255.255.0.0) - 65,536 IPs</option>
+                                    <option value="17">/17 (255.255.128.0) - 32,768 IPs</option>
+                                    <option value="18">/18 (255.255.192.0) - 16,384 IPs</option>
+                                    <option value="19">/19 (255.255.224.0) - 8,192 IPs</option>
+                                    <option value="20">/20 (255.255.240.0) - 4,096 IPs</option>
+                                    <option value="21">/21 (255.255.248.0) - 2,048 IPs</option>
+                                    <option value="22">/22 (255.255.252.0) - 1,024 IPs</option>
+                                    <option value="23">/23 (255.255.254.0) - 512 IPs</option>
+                                    <option value="24" selected>/24 (255.255.255.0) - 256 IPs</option>
+                                    <option value="25">/25 (255.255.255.128) - 128 IPs</option>
+                                    <option value="26">/26 (255.255.255.192) - 64 IPs</option>
+                                    <option value="27">/27 (255.255.255.224) - 32 IPs</option>
+                                    <option value="28">/28 (255.255.255.240) - 16 IPs</option>
+                                    <option value="29">/29 (255.255.255.248) - 8 IPs</option>
+                                    <option value="30">/30 (255.255.255.252) - 4 IPs</option>
+                                    <option value="31">/31 (255.255.255.254) - 2 IPs</option>
+                                    <option value="32">/32 (255.255.255.255) - 1 IP</option>
+                                </select>
+                            </div>
+
+                            <!-- VLSM Mode Toggle -->
+                            <div class="input-group">
+                                <label>VLSM Mode</label>
+                                <div class="vlsm-mode-toggle">
+                                    <button class="vlsm-mode-btn active" data-mode="strict">
+                                        <span class="mode-icon">🎯</span>
+                                        <span class="mode-name">Strict VLSM</span>
+                                        <span class="mode-desc">Only Hosts (Zero Wastage)</span>
+                                    </button>
+                                    <button class="vlsm-mode-btn" data-mode="hybrid">
+                                        <span class="mode-icon">🔀</span>
+                                        <span class="mode-name">Hybrid Mode</span>
+                                        <span class="mode-desc">Hosts + Subnet Count</span>
+                                    </button>
+                                </div>
+                            </div>
+
+                            <!-- Strict VLSM Input -->
+                            <div class="input-group" id="vlsm-strict-input">
+                                <label>Host Requirements (one per line)</label>
+                                <textarea id="vlsm-requirements" placeholder="Enter hosts needed for each subnet:
+60
+30
+14
+6
+2" rows="6"></textarea>
+                                <small class="input-hint">💡 Each line = 1 subnet with exact host requirement</small>
+                            </div>
+
+                            <!-- Hybrid Mode Input -->
+                            <div class="input-group" id="vlsm-hybrid-input" style="display:none;">
+                                <label>Host Requirements with Subnet Count (format: hosts,count)</label>
+                                <textarea id="vlsm-hybrid-requirements" placeholder="Enter: HostsPerSubnet,NumberOfSubnets
+60,2
+30,3
+14,4
+6,1
+2,2" rows="6"></textarea>
+                                <small class="input-hint">💡 Format: hosts,count → reserves (hosts × count)
+                                    subnets</small>
+                            </div>
+                            <button class="calculate-btn" id="vlsm-calculate">
+                                <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2">
+                                    <path
+                                        d="M9 3H5a2 2 0 0 0-2 2v4m6-6h10a2 2 0 0 1 2 2v4M9 3v18m0 0h10a2 2 0 0 0 2-2V9M9 21H5a2 2 0 0 1-2-2V9m0 0h18" />
+                                </svg>
+                                Generate VLSM Subnets
+                            </button>
+                        </div>
+
+                        <div class="vlsm-info-panel">
+                            <h3>ℹ️ VLSM Summary</h3>
+                            <div class="info-box">
+                                <div class="info-row">
+                                    <span class="info-label">Total Subnets:</span>
+                                    <span class="info-value" id="vlsm-total-subnets">-</span>
+                                </div>
+                                <div class="info-row">
+                                    <span class="info-label">Total IPs Available:</span>
+                                    <span class="info-value" id="vlsm-total-ips">-</span>
+                                </div>
+                                <div class="info-row">
+                                    <span class="info-label">Total IPs Allocated:</span>
+                                    <span class="info-value" id="vlsm-allocated-ips">-</span>
+                                </div>
+                                <div class="info-row">
+                                    <span class="info-label">IPs Wasted:</span>
+                                    <span class="info-value" id="vlsm-wasted-ips">-</span>
+                                </div>
+                                <div class="info-row">
+                                    <span class="info-label">Efficiency:</span>
+                                    <span class="info-value" id="vlsm-efficiency">-</span>
+                                </div>
+                            </div>
+                            <div class="vlsm-note">
+                                <p>💡 <strong>Tip:</strong> VLSM allocates subnets from largest to smallest host
+                                    requirement for optimal IP usage.</p>
+                            </div>
+                        </div>
+                    </div>
+
+                    <!-- VLSM Results Table -->
+                    <div class="vlsm-results" id="vlsm-results" style="display:none;">
+                        <h3>📋 VLSM Subnet Allocation</h3>
+                        <div class="table-container">
+                            <table class="vlsm-table">
+                                <thead>
+                                    <tr>
+                                        <th>Subnet</th>
+                                        <th>Hosts Needed</th>
+                                        <th>Network Address</th>
+                                        <th>CIDR</th>
+                                        <th>Subnet Mask</th>
+                                        <th>First Host</th>
+                                        <th>Last Host</th>
+                                        <th>Broadcast</th>
+                                        <th>Allocated</th>
+                                        <th>Wasted</th>
+                                    </tr>
+                                </thead>
+                                <tbody id="vlsm-table-body"></tbody>
+                            </table>
+                        </div>
+                    </div>
+                </div>
+
+                <!-- FLSM vs VLSM Comparison -->
+                <div class="comparison-section">
+                    <h3>📊 FLSM vs VLSM Comparison</h3>
+                    <div class="comparison-grid">
+                        <div class="comparison-card flsm-card">
+                            <h4>📐 FLSM (Fixed Length Subnet Mask)</h4>
+                            <ul>
+                                <li>✅ All subnets have the <strong>same size</strong></li>
+                                <li>✅ Easier to manage and configure</li>
+                                <li>✅ Simpler routing tables</li>
+                                <li>❌ Can waste IP addresses</li>
+                                <li>❌ Not efficient for varying host needs</li>
+                            </ul>
+                            <p class="use-case"><strong>Best for:</strong> Networks with similar-sized departments</p>
+                        </div>
+                        <div class="comparison-card vlsm-card">
+                            <h4>📊 VLSM (Variable Length Subnet Mask)</h4>
+                            <ul>
+                                <li>✅ Subnets have <strong>different sizes</strong></li>
+                                <li>✅ Efficient IP address utilization</li>
+                                <li>✅ Allocates based on actual needs</li>
+                                <li>❌ More complex to manage</li>
+                                <li>❌ Requires careful planning</li>
+                            </ul>
+                            <p class="use-case"><strong>Best for:</strong> Networks with varying host requirements</p>
+                        </div>
+                    </div>
+                </div>
+            </section>
+
+            <!-- Complete IPv4 CIDR Reference -->
+            <section class="reference-card glass-card">
+                <h2>📚 Complete IPv4 CIDR Reference Table (1-32)</h2>
+                <div class="cidr-table-container">
+                    <table class="cidr-reference-table">
+                        <thead>
+                            <tr>
+                                <th>CIDR</th>
+                                <th>Subnet Mask</th>
+                                <th>Total IPs</th>
+                                <th>Usable Hosts</th>
+                                <th>Class</th>
+                            </tr>
+                        </thead>
+                        <tbody>
+                            <tr>
+                                <td>/1</td>
+                                <td>128.0.0.0</td>
+                                <td>2,147,483,648</td>
+                                <td>2,147,483,646</td>
+                                <td>A+</td>
+                            </tr>
+                            <tr>
+                                <td>/2</td>
+                                <td>192.0.0.0</td>
+                                <td>1,073,741,824</td>
+                                <td>1,073,741,822</td>
+                                <td>A+</td>
+                            </tr>
+                            <tr>
+                                <td>/3</td>
+                                <td>224.0.0.0</td>
+                                <td>536,870,912</td>
+                                <td>536,870,910</td>
+                                <td>A+</td>
+                            </tr>
+                            <tr>
+                                <td>/4</td>
+                                <td>240.0.0.0</td>
+                                <td>268,435,456</td>
+                                <td>268,435,454</td>
+                                <td>A+</td>
+                            </tr>
+                            <tr>
+                                <td>/5</td>
+                                <td>248.0.0.0</td>
+                                <td>134,217,728</td>
+                                <td>134,217,726</td>
+                                <td>A+</td>
+                            </tr>
+                            <tr>
+                                <td>/6</td>
+                                <td>252.0.0.0</td>
+                                <td>67,108,864</td>
+                                <td>67,108,862</td>
+                                <td>A+</td>
+                            </tr>
+                            <tr>
+                                <td>/7</td>
+                                <td>254.0.0.0</td>
+                                <td>33,554,432</td>
+                                <td>33,554,430</td>
+                                <td>A+</td>
+                            </tr>
+                            <tr class="class-a">
+                                <td>/8</td>
+                                <td>255.0.0.0</td>
+                                <td>16,777,216</td>
+                                <td>16,777,214</td>
+                                <td>A</td>
+                            </tr>
+                            <tr>
+                                <td>/9</td>
+                                <td>255.128.0.0</td>
+                                <td>8,388,608</td>
+                                <td>8,388,606</td>
+                                <td>A</td>
+                            </tr>
+                            <tr>
+                                <td>/10</td>
+                                <td>255.192.0.0</td>
+                                <td>4,194,304</td>
+                                <td>4,194,302</td>
+                                <td>A</td>
+                            </tr>
+                            <tr>
+                                <td>/11</td>
+                                <td>255.224.0.0</td>
+                                <td>2,097,152</td>
+                                <td>2,097,150</td>
+                                <td>A</td>
+                            </tr>
+                            <tr>
+                                <td>/12</td>
+                                <td>255.240.0.0</td>
+                                <td>1,048,576</td>
+                                <td>1,048,574</td>
+                                <td>A</td>
+                            </tr>
+                            <tr>
+                                <td>/13</td>
+                                <td>255.248.0.0</td>
+                                <td>524,288</td>
+                                <td>524,286</td>
+                                <td>A</td>
+                            </tr>
+                            <tr>
+                                <td>/14</td>
+                                <td>255.252.0.0</td>
+                                <td>262,144</td>
+                                <td>262,142</td>
+                                <td>A</td>
+                            </tr>
+                            <tr>
+                                <td>/15</td>
+                                <td>255.254.0.0</td>
+                                <td>131,072</td>
+                                <td>131,070</td>
+                                <td>A</td>
+                            </tr>
+                            <tr class="class-b">
+                                <td>/16</td>
+                                <td>255.255.0.0</td>
+                                <td>65,536</td>
+                                <td>65,534</td>
+                                <td>B</td>
+                            </tr>
+                            <tr>
+                                <td>/17</td>
+                                <td>255.255.128.0</td>
+                                <td>32,768</td>
+                                <td>32,766</td>
+                                <td>B</td>
+                            </tr>
+                            <tr>
+                                <td>/18</td>
+                                <td>255.255.192.0</td>
+                                <td>16,384</td>
+                                <td>16,382</td>
+                                <td>B</td>
+                            </tr>
+                            <tr>
+                                <td>/19</td>
+                                <td>255.255.224.0</td>
+                                <td>8,192</td>
+                                <td>8,190</td>
+                                <td>B</td>
+                            </tr>
+                            <tr>
+                                <td>/20</td>
+                                <td>255.255.240.0</td>
+                                <td>4,096</td>
+                                <td>4,094</td>
+                                <td>B</td>
+                            </tr>
+                            <tr>
+                                <td>/21</td>
+                                <td>255.255.248.0</td>
+                                <td>2,048</td>
+                                <td>2,046</td>
+                                <td>B</td>
+                            </tr>
+                            <tr>
+                                <td>/22</td>
+                                <td>255.255.252.0</td>
+                                <td>1,024</td>
+                                <td>1,022</td>
+                                <td>B</td>
+                            </tr>
+                            <tr>
+                                <td>/23</td>
+                                <td>255.255.254.0</td>
+                                <td>512</td>
+                                <td>510</td>
+                                <td>B</td>
+                            </tr>
+                            <tr class="class-c">
+                                <td>/24</td>
+                                <td>255.255.255.0</td>
+                                <td>256</td>
+                                <td>254</td>
+                                <td>C</td>
+                            </tr>
+                            <tr>
+                                <td>/25</td>
+                                <td>255.255.255.128</td>
+                                <td>128</td>
+                                <td>126</td>
+                                <td>C</td>
+                            </tr>
+                            <tr>
+                                <td>/26</td>
+                                <td>255.255.255.192</td>
+                                <td>64</td>
+                                <td>62</td>
+                                <td>C</td>
+                            </tr>
+                            <tr>
+                                <td>/27</td>
+                                <td>255.255.255.224</td>
+                                <td>32</td>
+                                <td>30</td>
+                                <td>C</td>
+                            </tr>
+                            <tr>
+                                <td>/28</td>
+                                <td>255.255.255.240</td>
+                                <td>16</td>
+                                <td>14</td>
+                                <td>C</td>
+                            </tr>
+                            <tr>
+                                <td>/29</td>
+                                <td>255.255.255.248</td>
+                                <td>8</td>
+                                <td>6</td>
+                                <td>C</td>
+                            </tr>
+                            <tr>
+                                <td>/30</td>
+                                <td>255.255.255.252</td>
+                                <td>4</td>
+                                <td>2</td>
+                                <td>C (P2P)</td>
+                            </tr>
+                            <tr>
+                                <td>/31</td>
+                                <td>255.255.255.254</td>
+                                <td>2</td>
+                                <td>2*</td>
+                                <td>P2P Link</td>
+                            </tr>
+                            <tr>
+                                <td>/32</td>
+                                <td>255.255.255.255</td>
+                                <td>1</td>
+                                <td>1</td>
+                                <td>Host</td>
+                            </tr>
+                        </tbody>
+                    </table>
+                </div>
+                <p class="table-note">* /31 networks use both addresses (RFC 3021 for point-to-point links)</p>
+            </section>
+
+            <!-- Subnetting Concepts -->
+            <section class="concepts-section glass-card">
+                <h2>📖 Subnetting Concepts & Formulas</h2>
+                <div class="concepts-grid">
+                    <div class="concept-card">
+                        <h4>🔢 Number of Subnets</h4>
+                        <p class="formula">2<sup>n</sup></p>
+                        <p class="explanation">Where n = number of bits borrowed from host portion</p>
+                    </div>
+                    <div class="concept-card">
+                        <h4>🖥️ Number of Hosts per Subnet</h4>
+                        <p class="formula">2<sup>h</sup> - 2</p>
+                        <p class="explanation">Where h = number of host bits remaining. Subtract 2 for network &
+                            broadcast addresses</p>
+                    </div>
+                    <div class="concept-card">
+                        <h4>📊 Block Size / Increment</h4>
+                        <p class="formula">256 - Subnet Mask Octet Value</p>
+                        <p class="explanation">Determines the increment between subnet network addresses</p>
+                    </div>
+                    <div class="concept-card">
+                        <h4>🎭 Wildcard Mask</h4>
+                        <p class="formula">255.255.255.255 - Subnet Mask</p>
+                        <p class="explanation">Used in access control lists (ACLs) and OSPF configurations</p>
+                    </div>
+                </div>
+
+                <div class="ip-classes-section">
+                    <h3>📌 IP Address Classes</h3>
+                    <div class="classes-table-container">
+                        <table class="classes-table">
+                            <thead>
+                                <tr>
+                                    <th>Class</th>
+                                    <th>First Octet Range</th>
+                                    <th>Default Mask</th>
+                                    <th>CIDR</th>
+                                    <th>Networks</th>
+                                    <th>Hosts/Network</th>
+                                    <th>Purpose</th>
+                                </tr>
+                            </thead>
+                            <tbody>
+                                <tr class="class-a">
+                                    <td><strong>A</strong></td>
+                                    <td>1 - 126</td>
+                                    <td>255.0.0.0</td>
+                                    <td>/8</td>
+                                    <td>126</td>
+                                    <td>16,777,214</td>
+                                    <td>Large Networks</td>
+                                </tr>
+                                <tr class="class-b">
+                                    <td><strong>B</strong></td>
+                                    <td>128 - 191</td>
+                                    <td>255.255.0.0</td>
+                                    <td>/16</td>
+                                    <td>16,384</td>
+                                    <td>65,534</td>
+                                    <td>Medium Networks</td>
+                                </tr>
+                                <tr class="class-c">
+                                    <td><strong>C</strong></td>
+                                    <td>192 - 223</td>
+                                    <td>255.255.255.0</td>
+                                    <td>/24</td>
+                                    <td>2,097,152</td>
+                                    <td>254</td>
+                                    <td>Small Networks</td>
+                                </tr>
+                                <tr class="class-d">
+                                    <td><strong>D</strong></td>
+                                    <td>224 - 239</td>
+                                    <td>N/A</td>
+                                    <td>N/A</td>
+                                    <td>N/A</td>
+                                    <td>N/A</td>
+                                    <td>Multicast</td>
+                                </tr>
+                                <tr class="class-e">
+                                    <td><strong>E</strong></td>
+                                    <td>240 - 255</td>
+                                    <td>N/A</td>
+                                    <td>N/A</td>
+                                    <td>N/A</td>
+                                    <td>N/A</td>
+                                    <td>Reserved/Experimental</td>
+                                </tr>
+                            </tbody>
+                        </table>
+                    </div>
+                    <p class="note">Note: 127.x.x.x is reserved for loopback addresses</p>
+                </div>
+
+                <div class="private-ranges-section">
+                    <h3>🔒 Private IP Address Ranges (RFC 1918)</h3>
+                    <div class="private-ranges-grid">
+                        <div class="range-card class-a-bg">
+                            <h4>Class A Private</h4>
+                            <p class="range-value">10.0.0.0 - 10.255.255.255</p>
+                            <p class="range-cidr">10.0.0.0/8</p>
+                            <p class="range-hosts">16,777,216 addresses</p>
+                        </div>
+                        <div class="range-card class-b-bg">
+                            <h4>Class B Private</h4>
+                            <p class="range-value">172.16.0.0 - 172.31.255.255</p>
+                            <p class="range-cidr">172.16.0.0/12</p>
+                            <p class="range-hosts">1,048,576 addresses</p>
+                        </div>
+                        <div class="range-card class-c-bg">
+                            <h4>Class C Private</h4>
+                            <p class="range-value">192.168.0.0 - 192.168.255.255</p>
+                            <p class="range-cidr">192.168.0.0/16</p>
+                            <p class="range-hosts">65,536 addresses</p>
+                        </div>
+                    </div>
+                </div>
+            </section>
+        </main>
+
+        <!-- IPv6 Section -->
+        <main class="content-section" id="ipv6-section" style="display:none;">
+            <div class="calculator-grid">
+                <section class="input-panel glass-card">
+                    <h2>📥 IPv6 Input</h2>
+                    <div class="input-group">
+                        <label>IPv6 Address</label>
+                        <input type="text" id="ipv6-address" placeholder="2001:0db8:85a3:0000:0000:8a2e:0370:7334">
+                    </div>
+
+                    <!-- Quick IPv6 Type Selection -->
+                    <div class="input-group">
+                        <label>Quick Select Address Type</label>
+                        <div class="class-buttons ipv6-type-buttons">
+                            <button class="class-btn" data-ip="2001:db8::1" data-prefix="64">Global Unicast</button>
+                            <button class="class-btn" data-ip="fe80::1" data-prefix="10">Link-Local</button>
+                            <button class="class-btn" data-ip="fc00::1" data-prefix="7">Unique Local</button>
+                            <button class="class-btn" data-ip="ff02::1" data-prefix="8">Multicast</button>
+                            <button class="class-btn" data-ip="::1" data-prefix="128">Loopback</button>
+                        </div>
+                    </div>
+
+                    <div class="input-group">
+                        <label>Prefix Length (1-128)</label>
+                        <select id="ipv6-prefix">
+                            <option value="1">/1</option>
+                            <option value="2">/2</option>
+                            <option value="3">/3</option>
+                            <option value="4">/4</option>
+                            <option value="5">/5</option>
+                            <option value="6">/6</option>
+                            <option value="7">/7</option>
+                            <option value="8">/8</option>
+                            <option value="9">/9</option>
+                            <option value="10">/10</option>
+                            <option value="11">/11</option>
+                            <option value="12">/12</option>
+                            <option value="13">/13</option>
+                            <option value="14">/14</option>
+                            <option value="15">/15</option>
+                            <option value="16">/16</option>
+                            <option value="17">/17</option>
+                            <option value="18">/18</option>
+                            <option value="19">/19</option>
+                            <option value="20">/20</option>
+                            <option value="21">/21</option>
+                            <option value="22">/22</option>
+                            <option value="23">/23</option>
+                            <option value="24">/24</option>
+                            <option value="25">/25</option>
+                            <option value="26">/26</option>
+                            <option value="27">/27</option>
+                            <option value="28">/28</option>
+                            <option value="29">/29</option>
+                            <option value="30">/30</option>
+                            <option value="31">/31</option>
+                            <option value="32">/32</option>
+                            <option value="33">/33</option>
+                            <option value="34">/34</option>
+                            <option value="35">/35</option>
+                            <option value="36">/36</option>
+                            <option value="37">/37</option>
+                            <option value="38">/38</option>
+                            <option value="39">/39</option>
+                            <option value="40">/40</option>
+                            <option value="41">/41</option>
+                            <option value="42">/42</option>
+                            <option value="43">/43</option>
+                            <option value="44">/44</option>
+                            <option value="45">/45</option>
+                            <option value="46">/46</option>
+                            <option value="47">/47</option>
+                            <option value="48">/48 (Site allocation)</option>
+                            <option value="49">/49</option>
+                            <option value="50">/50</option>
+                            <option value="51">/51</option>
+                            <option value="52">/52</option>
+                            <option value="53">/53</option>
+                            <option value="54">/54</option>
+                            <option value="55">/55</option>
+                            <option value="56">/56 (Typical ISP allocation)</option>
+                            <option value="57">/57</option>
+                            <option value="58">/58</option>
+                            <option value="59">/59</option>
+                            <option value="60">/60</option>
+                            <option value="61">/61</option>
+                            <option value="62">/62</option>
+                            <option value="63">/63</option>
+                            <option value="64" selected>/64 (Standard subnet)</option>
+                            <option value="65">/65</option>
+                            <option value="66">/66</option>
+                            <option value="67">/67</option>
+                            <option value="68">/68</option>
+                            <option value="69">/69</option>
+                            <option value="70">/70</option>
+                            <option value="71">/71</option>
+                            <option value="72">/72</option>
+                            <option value="73">/73</option>
+                            <option value="74">/74</option>
+                            <option value="75">/75</option>
+                            <option value="76">/76</option>
+                            <option value="77">/77</option>
+                            <option value="78">/78</option>
+                            <option value="79">/79</option>
+                            <option value="80">/80</option>
+                            <option value="81">/81</option>
+                            <option value="82">/82</option>
+                            <option value="83">/83</option>
+                            <option value="84">/84</option>
+                            <option value="85">/85</option>
+                            <option value="86">/86</option>
+                            <option value="87">/87</option>
+                            <option value="88">/88</option>
+                            <option value="89">/89</option>
+                            <option value="90">/90</option>
+                            <option value="91">/91</option>
+                            <option value="92">/92</option>
+                            <option value="93">/93</option>
+                            <option value="94">/94</option>
+                            <option value="95">/95</option>
+                            <option value="96">/96</option>
+                            <option value="97">/97</option>
+                            <option value="98">/98</option>
+                            <option value="99">/99</option>
+                            <option value="100">/100</option>
+                            <option value="101">/101</option>
+                            <option value="102">/102</option>
+                            <option value="103">/103</option>
+                            <option value="104">/104</option>
+                            <option value="105">/105</option>
+                            <option value="106">/106</option>
+                            <option value="107">/107</option>
+                            <option value="108">/108</option>
+                            <option value="109">/109</option>
+                            <option value="110">/110</option>
+                            <option value="111">/111</option>
+                            <option value="112">/112</option>
+                            <option value="113">/113</option>
+                            <option value="114">/114</option>
+                            <option value="115">/115</option>
+                            <option value="116">/116</option>
+                            <option value="117">/117</option>
+                            <option value="118">/118</option>
+                            <option value="119">/119</option>
+                            <option value="120">/120</option>
+                            <option value="121">/121</option>
+                            <option value="122">/122</option>
+                            <option value="123">/123</option>
+                            <option value="124">/124</option>
+                            <option value="125">/125</option>
+                            <option value="126">/126</option>
+                            <option value="127">/127 (P2P link)</option>
+                            <option value="128">/128 (Single host)</option>
+                        </select>
+                    </div>
+                    <button class="calculate-btn" id="ipv6-calculate">
+                        <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2">
+                            <circle cx="11" cy="11" r="8" />
+                            <line x1="21" y1="21" x2="16.65" y2="16.65" />
+                        </svg>
+                        Calculate Subnet
+                    </button>
+                </section>
+
+                <section class="results-panel glass-card">
+                    <h2>📊 IPv6 Subnet Details</h2>
+                    <div class="results-grid" id="ipv6-results">
+                        <div class="result-item full"><span class="label">Full Address</span><span class="value mono"
+                                id="r6-full">-</span></div>
+                        <div class="result-item full"><span class="label">Abbreviated</span><span class="value mono"
+                                id="r6-short">-</span></div>
+                        <div class="result-item full"><span class="label">Network Address</span><span class="value mono"
+                                id="r6-network">-</span></div>
+                        <div class="result-item full"><span class="label">First Host</span><span class="value mono"
+                                id="r6-first">-</span></div>
+                        <div class="result-item full"><span class="label">Last Host</span><span class="value mono"
+                                id="r6-last">-</span></div>
+                        <div class="result-item"><span class="label">Prefix Length</span><span class="value"
+                                id="r6-prefix">-</span></div>
+                        <div class="result-item"><span class="label">Total Addresses</span><span class="value"
+                                id="r6-total">-</span></div>
+                        <div class="result-item"><span class="label">Address Type</span><span class="value"
+                                id="r6-type">-</span></div>
+                        <div class="result-item"><span class="label">Scope</span><span class="value"
+                                id="r6-scope">-</span></div>
+                    </div>
+                </section>
+            </div>
+
+            <!-- IPv6 Prefix Subnetting Calculator -->
+            <section class="flsm-vlsm-section glass-card">
+                <h2>🔧 IPv6 Prefix Subnetting Calculator</h2>
+                <p class="section-description">Generate IPv6 subnets by transitioning from a current prefix to a target
+                    prefix.
+                    Uses RFC 5952 compliant address compression and supports pagination for large subnet ranges.</p>
+
+                <div class="ipv6-subnet-grid">
+                    <div class="ipv6-subnet-input-panel">
+                        <h3>📥 IPv6 Subnet Input</h3>
+                        <div class="input-group">
+                            <label>Base IPv6 Network Address</label>
+                            <input type="text" id="ipv6-subnet-base" placeholder="2001:db8::" maxlength="45">
+                            <small class="input-hint">💡 Enter the base network address (e.g., 2001:db8::)</small>
+                        </div>
+                        <div class="input-group">
+                            <label>Current Prefix Length</label>
+                            <select id="ipv6-current-prefix">
+                                <option value="32">/32 (RIR Allocation)</option>
+                                <option value="36">/36</option>
+                                <option value="40">/40</option>
+                                <option value="44">/44</option>
+                                <option value="48" selected>/48 (Site Allocation)</option>
+                                <option value="52">/52</option>
+                                <option value="56">/56 (ISP Customer Allocation)</option>
+                                <option value="60">/60</option>
+                                <option value="64">/64 (Standard Subnet)</option>
+                            </select>
+                        </div>
+                        <div class="input-group">
+                            <label>Target Prefix Length</label>
+                            <select id="ipv6-target-prefix">
+                                <option value="52">/52</option>
+                                <option value="56">/56</option>
+                                <option value="60">/60</option>
+                                <option value="64" selected>/64 (Standard Subnet - SLAAC Compatible)</option>
+                                <option value="68">/68</option>
+                                <option value="72">/72</option>
+                                <option value="80">/80</option>
+                                <option value="96">/96</option>
+                                <option value="112">/112</option>
+                                <option value="120">/120</option>
+                                <option value="124">/124</option>
+                                <option value="126">/126 (P2P Link)</option>
+                                <option value="127">/127 (P2P Link RFC 6164)</option>
+                                <option value="128">/128 (Single Host)</option>
+                            </select>
+                            <small class="input-hint">⚠️ Prefixes &gt; /64 are SLAAC incompatible</small>
+                        </div>
+                        <button class="calculate-btn" id="ipv6-subnet-calculate">
+                            <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2">
+                                <path
+                                    d="M9 3H5a2 2 0 0 0-2 2v4m6-6h10a2 2 0 0 1 2 2v4M9 3v18m0 0h10a2 2 0 0 0 2-2V9M9 21H5a2 2 0 0 1-2-2V9m0 0h18" />
+                            </svg>
+                            Generate IPv6 Subnets
+                        </button>
+                    </div>
+
+                    <div class="ipv6-subnet-info-panel">
+                        <h3>ℹ️ Subnetting Summary</h3>
+                        <div class="info-box">
+                            <div class="info-row">
+                                <span class="info-label">Bits Borrowed:</span>
+                                <span class="info-value" id="ipv6s-bits-borrowed">-</span>
+                            </div>
+                            <div class="info-row">
+                                <span class="info-label">Total Subnets:</span>
+                                <span class="info-value" id="ipv6s-total-subnets">-</span>
+                            </div>
+                            <div class="info-row">
+                                <span class="info-label">IPs per Subnet:</span>
+                                <span class="info-value" id="ipv6s-ips-per-subnet">-</span>
+                            </div>
+                            <div class="info-row">
+                                <span class="info-label">New Prefix:</span>
+                                <span class="info-value" id="ipv6s-new-prefix">-</span>
+                            </div>
+                            <div class="info-row">
+                                <span class="info-label">SLAAC Status:</span>
+                                <span class="info-value" id="ipv6s-slaac-status">-</span>
+                            </div>
+                        </div>
+                        <div class="vlsm-note" id="ipv6s-slaac-warning" style="display:none;">
+                            <p>⚠️ <strong>SLAAC Incompatible:</strong> Prefixes longer than /64 cannot use Stateless
+                                Address Autoconfiguration.</p>
+                        </div>
+                    </div>
+                </div>
+
+                <!-- IPv6 Subnets Table -->
+                <div class="ipv6-subnet-results" id="ipv6-subnet-results" style="display:none;">
+                    <h3>📋 IPv6 Subnet Allocation</h3>
+                    <div class="ipv6-pagination" id="ipv6-pagination">
+                        <button class="pagination-btn" id="ipv6-first-page">⏮ First</button>
+                        <button class="pagination-btn" id="ipv6-prev-page">◀ Prev</button>
+                        <span class="pagination-info" id="ipv6-page-info">Page 1</span>
+                        <button class="pagination-btn" id="ipv6-next-page">Next ▶</button>
+                        <button class="pagination-btn" id="ipv6-last-page">Last ⏭</button>
+                    </div>
+                    <div class="table-container">
+                        <table class="ipv6-subnet-table">
+                            <thead>
+                                <tr>
+                                    <th>#</th>
+                                    <th>Subnet ID (Hex)</th>
+                                    <th>Network Address (Compressed)</th>
+                                    <th>First Host</th>
+                                    <th>Last Host</th>
+                                    <th>Total IPs</th>
+                                </tr>
+                            </thead>
+                            <tbody id="ipv6-subnet-table-body"></tbody>
+                        </table>
+                    </div>
+                    <div class="ipv6-pagination" id="ipv6-pagination-bottom">
+                        <button class="pagination-btn" id="ipv6-first-page-bottom">⏮ First</button>
+                        <button class="pagination-btn" id="ipv6-prev-page-bottom">◀ Prev</button>
+                        <span class="pagination-info" id="ipv6-page-info-bottom">Page 1</span>
+                        <button class="pagination-btn" id="ipv6-next-page-bottom">Next ▶</button>
+                        <button class="pagination-btn" id="ipv6-last-page-bottom">Last ⏭</button>
+                    </div>
+                </div>
+            </section>
+
+            <!-- Complete IPv6 Prefix Reference -->
+            <section class="reference-card glass-card">
+                <h2>📚 Complete IPv6 Prefix Reference (/1 to /128)</h2>
+                <div class="ipv6-prefix-grid">
+                    <div class="prefix-section">
+                        <h4>🌐 Global Routing Prefixes (/1 - /32)</h4>
+                        <div class="prefix-list">
+                            <span class="prefix-item">/1</span><span class="prefix-item">/2</span><span
+                                class="prefix-item">/3</span><span class="prefix-item">/4</span>
+                            <span class="prefix-item">/5</span><span class="prefix-item">/6</span><span
+                                class="prefix-item">/7</span><span class="prefix-item">/8</span>
+                            <span class="prefix-item">/9</span><span class="prefix-item">/10</span><span
+                                class="prefix-item">/11</span><span class="prefix-item">/12</span>
+                            <span class="prefix-item">/13</span><span class="prefix-item">/14</span><span
+                                class="prefix-item">/15</span><span class="prefix-item">/16</span>
+                            <span class="prefix-item">/17</span><span class="prefix-item">/18</span><span
+                                class="prefix-item">/19</span><span class="prefix-item">/20</span>
+                            <span class="prefix-item">/21</span><span class="prefix-item">/22</span><span
+                                class="prefix-item">/23</span><span class="prefix-item">/24</span>
+                            <span class="prefix-item">/25</span><span class="prefix-item">/26</span><span
+                                class="prefix-item">/27</span><span class="prefix-item">/28</span>
+                            <span class="prefix-item">/29</span><span class="prefix-item">/30</span><span
+                                class="prefix-item">/31</span><span class="prefix-item highlight">/32 (RIR)</span>
+                        </div>
+                    </div>
+                    <div class="prefix-section">
+                        <h4>🏢 ISP/Enterprise Allocations (/33 - /64)</h4>
+                        <div class="prefix-list">
+                            <span class="prefix-item">/33</span><span class="prefix-item">/34</span><span
+                                class="prefix-item">/35</span><span class="prefix-item">/36</span>
+                            <span class="prefix-item">/37</span><span class="prefix-item">/38</span><span
+                                class="prefix-item">/39</span><span class="prefix-item">/40</span>
+                            <span class="prefix-item">/41</span><span class="prefix-item">/42</span><span
+                                class="prefix-item">/43</span><span class="prefix-item">/44</span>
+                            <span class="prefix-item">/45</span><span class="prefix-item">/46</span><span
+                                class="prefix-item">/47</span><span class="prefix-item highlight">/48 (Site)</span>
+                            <span class="prefix-item">/49</span><span class="prefix-item">/50</span><span
+                                class="prefix-item">/51</span><span class="prefix-item">/52</span>
+                            <span class="prefix-item">/53</span><span class="prefix-item">/54</span><span
+                                class="prefix-item">/55</span><span class="prefix-item highlight">/56 (Consumer)</span>
+                            <span class="prefix-item">/57</span><span class="prefix-item">/58</span><span
+                                class="prefix-item">/59</span><span class="prefix-item">/60</span>
+                            <span class="prefix-item">/61</span><span class="prefix-item">/62</span><span
+                                class="prefix-item">/63</span><span class="prefix-item highlight">/64 (Subnet)</span>
+                        </div>
+                    </div>
+                    <div class="prefix-section">
+                        <h4>🖥️ Host Addressing (/65 - /128)</h4>
+                        <div class="prefix-list">
+                            <span class="prefix-item">/65</span><span class="prefix-item">/66</span><span
+                                class="prefix-item">/67</span><span class="prefix-item">/68</span>
+                            <span class="prefix-item">/69</span><span class="prefix-item">/70</span><span
+                                class="prefix-item">/71</span><span class="prefix-item">/72</span>
+                            <span class="prefix-item">/73</span><span class="prefix-item">/74</span><span
+                                class="prefix-item">/75</span><span class="prefix-item">/76</span>
+                            <span class="prefix-item">/77</span><span class="prefix-item">/78</span><span
+                                class="prefix-item">/79</span><span class="prefix-item">/80</span>
+                            <span class="prefix-item">/81</span><span class="prefix-item">/82</span><span
+                                class="prefix-item">/83</span><span class="prefix-item">/84</span>
+                            <span class="prefix-item">/85</span><span class="prefix-item">/86</span><span
+                                class="prefix-item">/87</span><span class="prefix-item">/88</span>
+                            <span class="prefix-item">/89</span><span class="prefix-item">/90</span><span
+                                class="prefix-item">/91</span><span class="prefix-item">/92</span>
+                            <span class="prefix-item">/93</span><span class="prefix-item">/94</span><span
+                                class="prefix-item">/95</span><span class="prefix-item">/96</span>
+                            <span class="prefix-item">/97</span><span class="prefix-item">/98</span><span
+                                class="prefix-item">/99</span><span class="prefix-item">/100</span>
+                            <span class="prefix-item">/101</span><span class="prefix-item">/102</span><span
+                                class="prefix-item">/103</span><span class="prefix-item">/104</span>
+                            <span class="prefix-item">/105</span><span class="prefix-item">/106</span><span
+                                class="prefix-item">/107</span><span class="prefix-item">/108</span>
+                            <span class="prefix-item">/109</span><span class="prefix-item">/110</span><span
+                                class="prefix-item">/111</span><span class="prefix-item">/112</span>
+                            <span class="prefix-item">/113</span><span class="prefix-item">/114</span><span
+                                class="prefix-item">/115</span><span class="prefix-item">/116</span>
+                            <span class="prefix-item">/117</span><span class="prefix-item">/118</span><span
+                                class="prefix-item">/119</span><span class="prefix-item">/120</span>
+                            <span class="prefix-item">/121</span><span class="prefix-item">/122</span><span
+                                class="prefix-item">/123</span><span class="prefix-item">/124</span>
+                            <span class="prefix-item">/125</span><span class="prefix-item">/126</span><span
+                                class="prefix-item highlight">/127 (P2P)</span><span class="prefix-item highlight">/128
+                                (Host)</span>
+                        </div>
+                    </div>
+                </div>
+            </section>
+
+            <!-- IPv6 Address Types Reference -->
+            <section class="reference-card glass-card">
+                <h2>📚 IPv6 Address Types Quick Reference</h2>
+                <div class="ipv6-info-grid">
+                    <div class="info-card">
+                        <h4>🌍 Global Unicast</h4>
+                        <p>2000::/3</p>
+                        <p class="info-desc">Publicly routable addresses</p>
+                    </div>
+                    <div class="info-card">
+                        <h4>🔗 Link-Local</h4>
+                        <p>fe80::/10</p>
+                        <p class="info-desc">Local network only, auto-configured</p>
+                    </div>
+                    <div class="info-card">
+                        <h4>🏠 Unique Local (ULA)</h4>
+                        <p>fc00::/7 (fd00::/8 used)</p>
+                        <p class="info-desc">Private addresses, not routable on internet</p>
+                    </div>
+                    <div class="info-card">
+                        <h4>📡 Multicast</h4>
+                        <p>ff00::/8</p>
+                        <p class="info-desc">One-to-many communication</p>
+                    </div>
+                    <div class="info-card">
+                        <h4>🔄 Loopback</h4>
+                        <p>::1/128</p>
+                        <p class="info-desc">Localhost address</p>
+                    </div>
+                    <div class="info-card">
+                        <h4>⚫ Unspecified</h4>
+                        <p>::/128</p>
+                        <p class="info-desc">No address assigned</p>
+                    </div>
+                </div>
+            </section>
+
+            <!-- IPv6 Special Addresses -->
+            <section class="reference-card glass-card">
+                <h2>🔧 IPv6 Special Addresses & Common Prefixes</h2>
+                <div class="special-addr-grid">
+                    <div class="special-addr-card">
+                        <h4>📍 Well-Known Multicast</h4>
+                        <table class="special-addr-table">
+                            <tr>
+                                <td>ff02::1</td>
+                                <td>All Nodes (link-local)</td>
+                            </tr>
+                            <tr>
+                                <td>ff02::2</td>
+                                <td>All Routers (link-local)</td>
+                            </tr>
+                            <tr>
+                                <td>ff02::5</td>
+                                <td>OSPF Routers</td>
+                            </tr>
+                            <tr>
+                                <td>ff02::6</td>
+                                <td>OSPF DR Routers</td>
+                            </tr>
+                            <tr>
+                                <td>ff02::9</td>
+                                <td>RIP Routers</td>
+                            </tr>
+                            <tr>
+                                <td>ff02::a</td>
+                                <td>EIGRP Routers</td>
+                            </tr>
+                            <tr>
+                                <td>ff02::d</td>
+                                <td>PIM Routers</td>
+                            </tr>
+                            <tr>
+                                <td>ff02::1:2</td>
+                                <td>DHCP Agents</td>
+                            </tr>
+                        </table>
+                    </div>
+                    <div class="special-addr-card">
+                        <h4>🌐 IPv6 Transition</h4>
+                        <table class="special-addr-table">
+                            <tr>
+                                <td>::ffff:0:0/96</td>
+                                <td>IPv4-mapped IPv6</td>
+                            </tr>
+                            <tr>
+                                <td>64:ff9b::/96</td>
+                                <td>NAT64 Prefix</td>
+                            </tr>
+                            <tr>
+                                <td>2001::/32</td>
+                                <td>Teredo Tunneling</td>
+                            </tr>
+                            <tr>
+                                <td>2002::/16</td>
+                                <td>6to4 Tunneling</td>
+                            </tr>
+                            <tr>
+                                <td>2001:db8::/32</td>
+                                <td>Documentation</td>
+                            </tr>
+                        </table>
+                    </div>
+                    <div class="special-addr-card">
+                        <h4>📊 Common Allocations</h4>
+                        <table class="special-addr-table">
+                            <tr>
+                                <td>/32</td>
+                                <td>Regional Internet Registry (RIR)</td>
+                            </tr>
+                            <tr>
+                                <td>/48</td>
+                                <td>Site/Organization allocation</td>
+                            </tr>
+                            <tr>
+                                <td>/56</td>
+                                <td>Typical consumer allocation</td>
+                            </tr>
+                            <tr>
+                                <td>/64</td>
+                                <td>Standard subnet size</td>
+                            </tr>
+                            <tr>
+                                <td>/127</td>
+                                <td>Point-to-Point links</td>
+                            </tr>
+                            <tr>
+                                <td>/128</td>
+                                <td>Single host/loopback</td>
+                            </tr>
+                        </table>
+                    </div>
+                </div>
+            </section>
+
+            <!-- IPv6 Subnetting Concepts -->
+            <section class="concepts-section glass-card">
+                <h2>📖 IPv6 Subnetting Concepts</h2>
+                <div class="concepts-grid">
+                    <div class="concept-card">
+                        <h4>📐 IPv6 Address Structure</h4>
+                        <p class="formula">128 bits total</p>
+                        <p class="explanation">48-bit Global Routing Prefix + 16-bit Subnet ID + 64-bit Interface ID</p>
+                    </div>
+                    <div class="concept-card">
+                        <h4>🔢 Subnets per /48</h4>
+                        <p class="formula">2<sup>16</sup> = 65,536</p>
+                        <p class="explanation">With standard /64 subnets from a /48 allocation</p>
+                    </div>
+                    <div class="concept-card">
+                        <h4>🖥️ Hosts per /64</h4>
+                        <p class="formula">2<sup>64</sup> = 18.4 quintillion</p>
+                        <p class="explanation">Standard subnet has more addresses than entire IPv4 space!</p>
+                    </div>
+                    <div class="concept-card">
+                        <h4>✨ No Broadcast</h4>
+                        <p class="formula">Uses Multicast</p>
+                        <p class="explanation">IPv6 replaces broadcast with multicast for efficiency</p>
+                    </div>
+                </div>
+            </section>
+        </main>
+
+        <footer class="app-footer">
+            <p>🔧 Professional Subnet Calculator - Complete IPv4 (CIDR /1-/32) & IPv6 (Prefix /1-/128) Subnetting Tool
+            </p>
+        </footer>
+    </div>
+
+    <script src="subnet-script.js"></script>
+</body>
+
+</html>

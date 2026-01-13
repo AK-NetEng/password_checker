@@ -1,0 +1,1616 @@
+/* Subnet Calculator Styles */
+* {
+    margin: 0;
+    padding: 0;
+    box-sizing: border-box;
+}
+
+:root {
+    --primary: #6366f1;
+    --primary-dark: #4f46e5;
+    --accent: #ec4899;
+    --success: #10b981;
+    --warning: #f59e0b;
+    --danger: #ef4444;
+    --bg-card: rgba(255, 255, 255, 0.95);
+    --text-primary: #1e293b;
+    --text-secondary: #64748b;
+    --border-color: rgba(99, 102, 241, 0.15);
+    --shadow-md: 0 8px 32px rgba(99, 102, 241, 0.15);
+    --class-a: #3b82f6;
+    --class-b: #10b981;
+    --class-c: #f59e0b;
+    --class-d: #8b5cf6;
+    --class-e: #ef4444;
+}
+
+body {
+    font-family: 'Inter', sans-serif;
+    background: linear-gradient(135deg, #667eea 0%, #764ba2 30%, #f093fb 60%, #4facfe 100%);
+    background-size: 400% 400%;
+    animation: gradientMove 20s ease infinite;
+    min-height: 100vh;
+    color: var(--text-primary);
+}
+
+@keyframes gradientMove {
+    0% {
+        background-position: 0% 50%;
+    }
+
+    50% {
+        background-position: 100% 50%;
+    }
+
+    100% {
+        background-position: 0% 50%;
+    }
+}
+
+#particleCanvas {
+    position: fixed;
+    top: 0;
+    left: 0;
+    width: 100%;
+    height: 100%;
+    pointer-events: none;
+    z-index: 0;
+}
+
+.gradient-overlay {
+    position: fixed;
+    top: 0;
+    left: 0;
+    width: 100%;
+    height: 100%;
+    background: radial-gradient(ellipse at 20% 20%, rgba(255, 255, 255, 0.4) 0%, transparent 50%);
+    pointer-events: none;
+    z-index: 1;
+}
+
+.app-container {
+    position: relative;
+    z-index: 2;
+    max-width: 1400px;
+    margin: 0 auto;
+    padding: 1.5rem;
+    min-height: 100vh;
+    display: flex;
+    flex-direction: column;
+    gap: 1.5rem;
+}
+
+/* Header */
+.app-header {
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+    padding: 1rem 2rem;
+    background: var(--bg-card);
+    border-radius: 20px;
+    box-shadow: var(--shadow-md);
+}
+
+.logo-section {
+    display: flex;
+    align-items: center;
+    gap: 1rem;
+}
+
+.logo-icon {
+    width: 50px;
+    height: 50px;
+    background: linear-gradient(135deg, var(--primary), var(--accent));
+    border-radius: 14px;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+}
+
+.logo-icon svg {
+    width: 28px;
+    height: 28px;
+    color: white;
+}
+
+.logo-text {
+    display: flex;
+    flex-direction: column;
+}
+
+.logo-text .title {
+    font-size: 1.5rem;
+    font-weight: 800;
+}
+
+.logo-text .highlight {
+    background: linear-gradient(135deg, var(--primary), var(--accent));
+    -webkit-background-clip: text;
+    -webkit-text-fill-color: transparent;
+    background-clip: text;
+}
+
+.logo-text .subtitle {
+    font-size: 0.85rem;
+    color: var(--text-secondary);
+}
+
+.theme-toggle {
+    width: 48px;
+    height: 48px;
+    background: linear-gradient(135deg, rgba(99, 102, 241, 0.1), rgba(236, 72, 153, 0.1));
+    border: 2px solid var(--border-color);
+    border-radius: 14px;
+    cursor: pointer;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    transition: all 0.3s;
+}
+
+.theme-toggle svg {
+    width: 24px;
+    height: 24px;
+    color: var(--primary);
+}
+
+.theme-toggle:hover {
+    background: linear-gradient(135deg, var(--primary), var(--accent));
+    border-color: var(--primary);
+}
+
+.theme-toggle:hover svg {
+    color: white;
+}
+
+/* Header Right Section */
+.header-right-section {
+    display: flex;
+    align-items: center;
+    gap: 1rem;
+}
+
+/* Navigation Links */
+.nav-links {
+    display: flex;
+    align-items: center;
+    gap: 0.5rem;
+    padding: 0.35rem;
+    background: rgba(99, 102, 241, 0.08);
+    border-radius: 12px;
+}
+
+.nav-link {
+    display: flex;
+    align-items: center;
+    gap: 0.4rem;
+    padding: 0.6rem 1rem;
+    border-radius: 10px;
+    text-decoration: none;
+    font-size: 0.9rem;
+    font-weight: 600;
+    color: var(--text-secondary);
+    transition: all 0.3s ease;
+}
+
+.nav-link:hover {
+    background: rgba(99, 102, 241, 0.15);
+    color: var(--primary);
+}
+
+.nav-link.active {
+    background: linear-gradient(135deg, var(--primary), var(--accent));
+    color: white;
+    box-shadow: 0 2px 10px rgba(99, 102, 241, 0.3);
+}
+
+/* Description Section */
+.description-section {
+    text-align: center;
+    padding: 2rem;
+}
+
+.description-section h2 {
+    font-size: 1.5rem;
+    margin-bottom: 1rem;
+    background: linear-gradient(135deg, var(--primary), var(--accent));
+    -webkit-background-clip: text;
+    -webkit-text-fill-color: transparent;
+    background-clip: text;
+}
+
+.description-text {
+    font-size: 1.1rem;
+    line-height: 1.8;
+    color: var(--text-secondary);
+    max-width: 900px;
+    margin: 0 auto 1.5rem;
+}
+
+.description-text .highlight-text {
+    color: var(--primary);
+    font-weight: 600;
+}
+
+.features-grid {
+    display: flex;
+    justify-content: center;
+    gap: 1.5rem;
+    flex-wrap: wrap;
+    margin-top: 1rem;
+}
+
+.feature-item {
+    display: flex;
+    align-items: center;
+    gap: 0.5rem;
+    padding: 0.75rem 1.25rem;
+    background: linear-gradient(135deg, rgba(99, 102, 241, 0.1), rgba(236, 72, 153, 0.1));
+    border-radius: 12px;
+    border: 1px solid var(--border-color);
+}
+
+.feature-icon {
+    font-size: 1.25rem;
+}
+
+.feature-text {
+    font-size: 0.9rem;
+    font-weight: 600;
+    color: var(--text-primary);
+}
+
+/* Protocol Tabs */
+.protocol-tabs {
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    gap: 0;
+    background: var(--bg-card);
+    border-radius: 16px;
+    padding: 0.5rem;
+    box-shadow: var(--shadow-md);
+}
+
+.tab-btn {
+    flex: 1;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    gap: 0.75rem;
+    padding: 1rem 2rem;
+    background: transparent;
+    border: none;
+    border-radius: 12px;
+    font-size: 1.1rem;
+    font-weight: 700;
+    color: var(--text-secondary);
+    cursor: pointer;
+    transition: all 0.3s;
+}
+
+.tab-btn.active {
+    background: linear-gradient(135deg, var(--primary), var(--accent));
+    color: white;
+    box-shadow: 0 4px 15px rgba(99, 102, 241, 0.4);
+}
+
+.tab-btn:not(.active):hover {
+    background: rgba(99, 102, 241, 0.1);
+    color: var(--primary);
+}
+
+.tab-divider {
+    width: 2px;
+    height: 40px;
+    background: linear-gradient(180deg, transparent, var(--primary), transparent);
+}
+
+.tab-icon {
+    font-size: 1.3rem;
+}
+
+/* Glass Card */
+.glass-card {
+    background: var(--bg-card);
+    border: 1px solid var(--border-color);
+    border-radius: 24px;
+    padding: 1.5rem;
+    box-shadow: var(--shadow-md);
+}
+
+.glass-card h2 {
+    font-size: 1.2rem;
+    font-weight: 700;
+    margin-bottom: 1.25rem;
+    color: var(--text-primary);
+}
+
+/* Calculator Grid */
+.calculator-grid {
+    display: grid;
+    grid-template-columns: 1fr 1.5fr;
+    gap: 1.5rem;
+}
+
+/* Input Panel */
+.input-panel {
+    display: flex;
+    flex-direction: column;
+    gap: 1rem;
+}
+
+.input-group {
+    display: flex;
+    flex-direction: column;
+    gap: 0.5rem;
+}
+
+.input-group label {
+    font-size: 0.9rem;
+    font-weight: 600;
+    color: var(--text-secondary);
+}
+
+.input-group input,
+.input-group select {
+    padding: 0.9rem 1rem;
+    font-size: 1rem;
+    border: 2px solid var(--border-color);
+    border-radius: 12px;
+    background: #f8fafc;
+    outline: none;
+    transition: all 0.3s;
+    font-family: 'JetBrains Mono', monospace;
+}
+
+.input-group input:focus,
+.input-group select:focus {
+    border-color: var(--primary);
+    box-shadow: 0 0 0 4px rgba(99, 102, 241, 0.15);
+}
+
+.mask-input-row {
+    display: flex;
+    gap: 0.5rem;
+}
+
+.mask-input-row select {
+    flex: 1;
+}
+
+/* Class Selection Buttons */
+.class-buttons {
+    display: flex;
+    flex-wrap: wrap;
+    gap: 0.5rem;
+}
+
+.class-btn {
+    padding: 0.5rem 0.75rem;
+    border: 2px solid var(--border-color);
+    border-radius: 8px;
+    background: #f8fafc;
+    font-size: 0.8rem;
+    font-weight: 600;
+    cursor: pointer;
+    transition: all 0.3s;
+}
+
+.class-btn:hover {
+    border-color: var(--primary);
+    background: rgba(99, 102, 241, 0.1);
+}
+
+.class-btn[data-class="A"] {
+    border-left: 4px solid var(--class-a);
+}
+
+.class-btn[data-class="B"] {
+    border-left: 4px solid var(--class-b);
+}
+
+.class-btn[data-class="C"] {
+    border-left: 4px solid var(--class-c);
+}
+
+.class-btn[data-class="D"] {
+    border-left: 4px solid var(--class-d);
+}
+
+.class-btn[data-class="E"] {
+    border-left: 4px solid var(--class-e);
+}
+
+.ipv6-type-buttons .class-btn {
+    border-left: 4px solid var(--primary);
+}
+
+.calculate-btn {
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    gap: 0.75rem;
+    padding: 1rem;
+    background: linear-gradient(135deg, var(--primary), var(--accent));
+    border: none;
+    border-radius: 14px;
+    color: white;
+    font-size: 1rem;
+    font-weight: 700;
+    cursor: pointer;
+    transition: all 0.3s;
+    box-shadow: 0 4px 15px rgba(99, 102, 241, 0.35);
+}
+
+.calculate-btn:hover {
+    transform: translateY(-2px);
+    box-shadow: 0 8px 25px rgba(99, 102, 241, 0.45);
+}
+
+.calculate-btn svg {
+    width: 20px;
+    height: 20px;
+}
+
+/* Results Panel */
+.results-grid {
+    display: grid;
+    grid-template-columns: repeat(2, 1fr);
+    gap: 0.75rem;
+}
+
+.result-item {
+    display: flex;
+    flex-direction: column;
+    gap: 0.25rem;
+    padding: 0.85rem;
+    background: linear-gradient(135deg, #f8fafc, #f1f5f9);
+    border-radius: 12px;
+    border: 1px solid var(--border-color);
+}
+
+.result-item.full {
+    grid-column: 1 / -1;
+}
+
+.result-item.highlight-result {
+    background: linear-gradient(135deg, rgba(99, 102, 241, 0.15), rgba(236, 72, 153, 0.1));
+    border-color: var(--primary);
+}
+
+.result-item .label {
+    font-size: 0.8rem;
+    font-weight: 600;
+    color: var(--text-secondary);
+    text-transform: uppercase;
+    letter-spacing: 0.5px;
+}
+
+.result-item .value {
+    font-size: 1rem;
+    font-weight: 700;
+    color: var(--primary);
+}
+
+.result-item .value.mono {
+    font-family: 'JetBrains Mono', monospace;
+    font-size: 0.9rem;
+    word-break: break-all;
+}
+
+/* Subnets Table */
+.subnets-table {
+    margin-top: 0;
+}
+
+.table-container {
+    max-height: 300px;
+    overflow-y: auto;
+    border-radius: 12px;
+}
+
+.cidr-table-container {
+    max-height: 500px;
+    overflow-y: auto;
+    border-radius: 12px;
+}
+
+table {
+    width: 100%;
+    border-collapse: collapse;
+    font-size: 0.9rem;
+}
+
+thead {
+    position: sticky;
+    top: 0;
+    background: linear-gradient(135deg, var(--primary), var(--accent));
+    color: white;
+}
+
+th,
+td {
+    padding: 0.75rem 1rem;
+    text-align: left;
+}
+
+th {
+    font-weight: 600;
+}
+
+tbody tr {
+    border-bottom: 1px solid var(--border-color);
+    transition: background 0.2s;
+}
+
+tbody tr:hover {
+    background: rgba(99, 102, 241, 0.05);
+}
+
+tbody td {
+    font-family: 'JetBrains Mono', monospace;
+    font-size: 0.85rem;
+}
+
+/* CIDR Reference Table */
+.cidr-reference-table tbody tr.class-a {
+    background: rgba(59, 130, 246, 0.1);
+}
+
+.cidr-reference-table tbody tr.class-b {
+    background: rgba(16, 185, 129, 0.1);
+}
+
+.cidr-reference-table tbody tr.class-c {
+    background: rgba(245, 158, 11, 0.1);
+}
+
+.table-note {
+    margin-top: 1rem;
+    font-size: 0.85rem;
+    color: var(--text-secondary);
+    font-style: italic;
+}
+
+/* Reference Grid */
+.reference-grid {
+    display: grid;
+    grid-template-columns: repeat(5, 1fr);
+    gap: 0.75rem;
+}
+
+.ref-item {
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    padding: 0.75rem;
+    background: linear-gradient(135deg, #eef2ff, #fdf2f8);
+    border-radius: 12px;
+    border: 1px solid var(--border-color);
+    font-size: 0.85rem;
+}
+
+.ref-item span:first-child {
+    font-weight: 700;
+    color: var(--primary);
+    font-size: 1rem;
+}
+
+.ref-item span:nth-child(2) {
+    font-family: 'JetBrains Mono', monospace;
+    color: var(--text-secondary);
+    font-size: 0.75rem;
+}
+
+.ref-item span:last-child {
+    font-weight: 600;
+    color: var(--success);
+}
+
+/* IPv6 Info Grid */
+.ipv6-info-grid {
+    display: grid;
+    grid-template-columns: repeat(3, 1fr);
+    gap: 1rem;
+}
+
+.info-card {
+    padding: 1.25rem;
+    background: linear-gradient(135deg, #eef2ff, #fdf2f8);
+    border-radius: 16px;
+    border: 1px solid var(--border-color);
+}
+
+.info-card h4 {
+    font-size: 1rem;
+    margin-bottom: 0.5rem;
+}
+
+.info-card p {
+    font-size: 0.9rem;
+    color: var(--text-secondary);
+    font-family: 'JetBrains Mono', monospace;
+}
+
+.info-card .info-desc {
+    font-family: 'Inter', sans-serif;
+    font-size: 0.8rem;
+    margin-top: 0.5rem;
+    opacity: 0.8;
+}
+
+/* IPv6 Prefix Grid */
+.ipv6-prefix-grid {
+    display: flex;
+    flex-direction: column;
+    gap: 1.5rem;
+}
+
+.prefix-section h4 {
+    margin-bottom: 0.75rem;
+    color: var(--text-primary);
+}
+
+.prefix-list {
+    display: flex;
+    flex-wrap: wrap;
+    gap: 0.5rem;
+}
+
+.prefix-item {
+    padding: 0.4rem 0.75rem;
+    background: linear-gradient(135deg, #eef2ff, #fdf2f8);
+    border-radius: 8px;
+    border: 1px solid var(--border-color);
+    font-size: 0.85rem;
+    font-family: 'JetBrains Mono', monospace;
+    font-weight: 500;
+    color: var(--text-secondary);
+    transition: all 0.2s;
+}
+
+.prefix-item:hover {
+    border-color: var(--primary);
+    background: rgba(99, 102, 241, 0.1);
+    color: var(--primary);
+}
+
+.prefix-item.highlight {
+    background: linear-gradient(135deg, var(--primary), var(--accent));
+    color: white;
+    border-color: transparent;
+}
+
+/* Concepts Section */
+.concepts-section {
+    padding: 2rem;
+}
+
+.concepts-section h2 {
+    margin-bottom: 1.5rem;
+}
+
+.concepts-section h3 {
+    margin: 2rem 0 1rem;
+    font-size: 1.1rem;
+    color: var(--text-primary);
+}
+
+.concepts-grid {
+    display: grid;
+    grid-template-columns: repeat(auto-fit, minmax(250px, 1fr));
+    gap: 1rem;
+}
+
+.concept-card {
+    padding: 1.25rem;
+    background: linear-gradient(135deg, rgba(99, 102, 241, 0.08), rgba(236, 72, 153, 0.05));
+    border-radius: 16px;
+    border: 1px solid var(--border-color);
+    text-align: center;
+}
+
+.concept-card h4 {
+    margin-bottom: 0.75rem;
+    color: var(--text-primary);
+}
+
+.concept-card .formula {
+    font-size: 1.5rem;
+    font-weight: 700;
+    color: var(--primary);
+    font-family: 'JetBrains Mono', monospace;
+    margin-bottom: 0.5rem;
+}
+
+.concept-card .explanation {
+    font-size: 0.85rem;
+    color: var(--text-secondary);
+    line-height: 1.5;
+}
+
+/* Classes Table */
+.classes-table-container {
+    overflow-x: auto;
+    border-radius: 12px;
+}
+
+.classes-table {
+    min-width: 700px;
+}
+
+.classes-table tbody tr.class-a {
+    background: rgba(59, 130, 246, 0.1);
+}
+
+.classes-table tbody tr.class-b {
+    background: rgba(16, 185, 129, 0.1);
+}
+
+.classes-table tbody tr.class-c {
+    background: rgba(245, 158, 11, 0.1);
+}
+
+.classes-table tbody tr.class-d {
+    background: rgba(139, 92, 246, 0.1);
+}
+
+.classes-table tbody tr.class-e {
+    background: rgba(239, 68, 68, 0.1);
+}
+
+.note {
+    margin-top: 1rem;
+    font-size: 0.85rem;
+    color: var(--text-secondary);
+    font-style: italic;
+}
+
+/* Private Ranges Section */
+.private-ranges-grid {
+    display: grid;
+    grid-template-columns: repeat(auto-fit, minmax(280px, 1fr));
+    gap: 1rem;
+}
+
+.range-card {
+    padding: 1.5rem;
+    border-radius: 16px;
+    border: 1px solid var(--border-color);
+    text-align: center;
+}
+
+.range-card h4 {
+    margin-bottom: 0.75rem;
+    font-size: 1rem;
+}
+
+.range-card .range-value {
+    font-family: 'JetBrains Mono', monospace;
+    font-size: 0.9rem;
+    color: var(--text-primary);
+    font-weight: 600;
+}
+
+.range-card .range-cidr {
+    font-family: 'JetBrains Mono', monospace;
+    font-size: 1.1rem;
+    color: var(--primary);
+    font-weight: 700;
+    margin: 0.5rem 0;
+}
+
+.range-card .range-hosts {
+    font-size: 0.85rem;
+    color: var(--text-secondary);
+}
+
+.range-card.class-a-bg {
+    background: linear-gradient(135deg, rgba(59, 130, 246, 0.15), rgba(59, 130, 246, 0.05));
+}
+
+.range-card.class-b-bg {
+    background: linear-gradient(135deg, rgba(16, 185, 129, 0.15), rgba(16, 185, 129, 0.05));
+}
+
+.range-card.class-c-bg {
+    background: linear-gradient(135deg, rgba(245, 158, 11, 0.15), rgba(245, 158, 11, 0.05));
+}
+
+/* Special Address Grid */
+.special-addr-grid {
+    display: grid;
+    grid-template-columns: repeat(auto-fit, minmax(300px, 1fr));
+    gap: 1rem;
+}
+
+.special-addr-card {
+    padding: 1.25rem;
+    background: linear-gradient(135deg, rgba(99, 102, 241, 0.08), rgba(236, 72, 153, 0.05));
+    border-radius: 16px;
+    border: 1px solid var(--border-color);
+}
+
+.special-addr-card h4 {
+    margin-bottom: 1rem;
+    color: var(--text-primary);
+}
+
+.special-addr-table {
+    width: 100%;
+}
+
+.special-addr-table tr {
+    border-bottom: 1px solid var(--border-color);
+}
+
+.special-addr-table td {
+    padding: 0.5rem 0.25rem;
+    font-size: 0.85rem;
+}
+
+.special-addr-table td:first-child {
+    font-family: 'JetBrains Mono', monospace;
+    color: var(--primary);
+    font-weight: 500;
+}
+
+.special-addr-table td:last-child {
+    color: var(--text-secondary);
+}
+
+/* =============================================
+   FLSM & VLSM Calculator Styles
+   ============================================= */
+.flsm-vlsm-section {
+    margin-top: 2rem;
+}
+
+.flsm-vlsm-section .section-description {
+    color: var(--text-secondary);
+    font-size: 0.95rem;
+    margin-bottom: 1.5rem;
+    line-height: 1.6;
+}
+
+/* Method Tabs */
+.method-tabs {
+    display: flex;
+    gap: 1rem;
+    margin-bottom: 2rem;
+}
+
+.method-tab {
+    flex: 1;
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    padding: 1.25rem;
+    background: linear-gradient(135deg, rgba(99, 102, 241, 0.05), rgba(236, 72, 153, 0.03));
+    border: 2px solid var(--border-color);
+    border-radius: 16px;
+    cursor: pointer;
+    transition: all 0.3s ease;
+}
+
+.method-tab:hover {
+    border-color: var(--primary);
+    background: linear-gradient(135deg, rgba(99, 102, 241, 0.1), rgba(236, 72, 153, 0.05));
+}
+
+.method-tab.active {
+    background: linear-gradient(135deg, var(--primary), var(--accent));
+    border-color: transparent;
+    color: white;
+    box-shadow: 0 8px 25px rgba(99, 102, 241, 0.35);
+}
+
+.method-tab .method-icon {
+    font-size: 1.75rem;
+    margin-bottom: 0.5rem;
+}
+
+.method-tab .method-name {
+    font-size: 1.25rem;
+    font-weight: 700;
+}
+
+.method-tab .method-desc {
+    font-size: 0.8rem;
+    opacity: 0.8;
+}
+
+/* FLSM/VLSM Grid Layout */
+.flsm-grid,
+.vlsm-grid {
+    display: grid;
+    grid-template-columns: 1fr 1fr;
+    gap: 1.5rem;
+    margin-bottom: 1.5rem;
+}
+
+.flsm-input-panel,
+.vlsm-input-panel,
+.flsm-info-panel,
+.vlsm-info-panel {
+    padding: 1.5rem;
+    background: linear-gradient(135deg, rgba(99, 102, 241, 0.05), rgba(236, 72, 153, 0.03));
+    border-radius: 16px;
+    border: 1px solid var(--border-color);
+}
+
+.flsm-input-panel h3,
+.vlsm-input-panel h3,
+.flsm-info-panel h3,
+.vlsm-info-panel h3,
+.flsm-results h3,
+.vlsm-results h3 {
+    font-size: 1.1rem;
+    margin-bottom: 1rem;
+    color: var(--text-primary);
+}
+
+/* Requirement Toggle */
+.requirement-toggle {
+    display: flex;
+    gap: 0.5rem;
+}
+
+.req-toggle-btn {
+    flex: 1;
+    padding: 0.75rem;
+    background: linear-gradient(135deg, #eef2ff, #fdf2f8);
+    border: 2px solid var(--border-color);
+    border-radius: 10px;
+    font-weight: 600;
+    cursor: pointer;
+    transition: all 0.3s ease;
+}
+
+.req-toggle-btn:hover {
+    border-color: var(--primary);
+}
+
+.req-toggle-btn.active {
+    background: linear-gradient(135deg, var(--primary), var(--accent));
+    color: white;
+    border-color: transparent;
+}
+
+/* Info Box */
+.info-box {
+    display: flex;
+    flex-direction: column;
+    gap: 0.75rem;
+}
+
+.info-row {
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+    padding: 0.6rem 0;
+    border-bottom: 1px solid var(--border-color);
+}
+
+.info-row:last-child {
+    border-bottom: none;
+}
+
+.info-label {
+    font-size: 0.9rem;
+    color: var(--text-secondary);
+}
+
+.info-value {
+    font-family: 'JetBrains Mono', monospace;
+    font-size: 0.95rem;
+    font-weight: 600;
+    color: var(--primary);
+}
+
+/* VLSM Mode Toggle */
+.vlsm-mode-toggle,
+.flsm-mode-toggle {
+    display: flex;
+    gap: 0.75rem;
+}
+
+.vlsm-mode-btn,
+.flsm-mode-btn {
+    flex: 1;
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    padding: 1rem;
+    background: linear-gradient(135deg, #eef2ff, #fdf2f8);
+    border: 2px solid var(--border-color);
+    border-radius: 12px;
+    cursor: pointer;
+    transition: all 0.3s ease;
+}
+
+.vlsm-mode-btn:hover,
+.flsm-mode-btn:hover {
+    border-color: var(--primary);
+    background: linear-gradient(135deg, rgba(99, 102, 241, 0.1), rgba(236, 72, 153, 0.05));
+}
+
+.vlsm-mode-btn.active,
+.flsm-mode-btn.active {
+    background: linear-gradient(135deg, var(--primary), var(--accent));
+    color: white;
+    border-color: transparent;
+    box-shadow: 0 4px 15px rgba(99, 102, 241, 0.3);
+}
+
+.vlsm-mode-btn .mode-icon,
+.flsm-mode-btn .mode-icon {
+    font-size: 1.5rem;
+    margin-bottom: 0.25rem;
+}
+
+.vlsm-mode-btn .mode-name,
+.flsm-mode-btn .mode-name {
+    font-size: 0.95rem;
+    font-weight: 700;
+}
+
+.vlsm-mode-btn .mode-desc,
+.flsm-mode-btn .mode-desc {
+    font-size: 0.7rem;
+    opacity: 0.8;
+    margin-top: 0.15rem;
+}
+
+/* Input Hints */
+.input-hint {
+    font-size: 0.8rem;
+    color: var(--text-secondary);
+    margin-top: 0.25rem;
+}
+
+/* Hybrid VLSM Textarea */
+#vlsm-hybrid-requirements {
+    width: 100%;
+    padding: 1rem;
+    border: 2px solid var(--border-color);
+    border-radius: 12px;
+    font-family: 'JetBrains Mono', monospace;
+    font-size: 0.9rem;
+    background: var(--bg-card);
+    resize: vertical;
+    min-height: 120px;
+    transition: border-color 0.3s;
+}
+
+#vlsm-hybrid-requirements:focus {
+    outline: none;
+    border-color: var(--primary);
+}
+
+/* VLSM Textarea */
+#vlsm-requirements {
+    width: 100%;
+    padding: 1rem;
+    border: 2px solid var(--border-color);
+    border-radius: 12px;
+    font-family: 'JetBrains Mono', monospace;
+    font-size: 0.9rem;
+    background: var(--bg-card);
+    resize: vertical;
+    min-height: 120px;
+    transition: border-color 0.3s;
+}
+
+#vlsm-requirements:focus {
+    outline: none;
+    border-color: var(--primary);
+}
+
+/* VLSM Note */
+.vlsm-note {
+    margin-top: 1rem;
+    padding: 0.75rem;
+    background: rgba(16, 185, 129, 0.1);
+    border-radius: 10px;
+    border: 1px solid rgba(16, 185, 129, 0.3);
+}
+
+.vlsm-note p {
+    font-size: 0.85rem;
+    color: var(--text-secondary);
+    margin: 0;
+}
+
+/* FLSM/VLSM Results */
+.flsm-results,
+.vlsm-results {
+    margin-top: 1.5rem;
+    animation: fadeIn 0.3s ease;
+}
+
+@keyframes fadeIn {
+    from {
+        opacity: 0;
+        transform: translateY(10px);
+    }
+
+    to {
+        opacity: 1;
+        transform: translateY(0);
+    }
+}
+
+.flsm-table,
+.vlsm-table {
+    width: 100%;
+    border-collapse: collapse;
+    font-size: 0.85rem;
+}
+
+.flsm-table th,
+.vlsm-table th {
+    padding: 0.75rem 0.5rem;
+    text-align: center;
+}
+
+.flsm-table td,
+.vlsm-table td {
+    padding: 0.6rem 0.5rem;
+    text-align: center;
+    font-family: 'JetBrains Mono', monospace;
+    font-size: 0.8rem;
+}
+
+/* Comparison Section */
+.comparison-section {
+    margin-top: 2rem;
+    padding-top: 1.5rem;
+    border-top: 2px dashed var(--border-color);
+}
+
+.comparison-section h3 {
+    margin-bottom: 1.25rem;
+    text-align: center;
+}
+
+.comparison-grid {
+    display: grid;
+    grid-template-columns: repeat(2, 1fr);
+    gap: 1.5rem;
+}
+
+.comparison-card {
+    padding: 1.5rem;
+    border-radius: 16px;
+    border: 2px solid var(--border-color);
+}
+
+.comparison-card h4 {
+    margin-bottom: 1rem;
+    font-size: 1.05rem;
+}
+
+.comparison-card ul {
+    list-style: none;
+    padding: 0;
+    margin: 0 0 1rem 0;
+}
+
+.comparison-card li {
+    padding: 0.4rem 0;
+    font-size: 0.9rem;
+    color: var(--text-secondary);
+}
+
+.comparison-card .use-case {
+    padding: 0.75rem;
+    background: rgba(99, 102, 241, 0.1);
+    border-radius: 8px;
+    font-size: 0.85rem;
+    margin: 0;
+}
+
+.flsm-card {
+    background: linear-gradient(135deg, rgba(59, 130, 246, 0.08), rgba(59, 130, 246, 0.02));
+}
+
+.vlsm-card {
+    background: linear-gradient(135deg, rgba(16, 185, 129, 0.08), rgba(16, 185, 129, 0.02));
+}
+
+/* Footer */
+.app-footer {
+    text-align: center;
+    padding: 1rem;
+    background: var(--bg-card);
+    border-radius: 16px;
+    color: var(--text-secondary);
+    font-size: 0.9rem;
+}
+
+/* Responsive */
+@media (max-width: 1024px) {
+    .calculator-grid {
+        grid-template-columns: 1fr;
+    }
+
+    .reference-grid {
+        grid-template-columns: repeat(3, 1fr);
+    }
+
+    .ipv6-info-grid {
+        grid-template-columns: repeat(2, 1fr);
+    }
+}
+
+@media (max-width: 768px) {
+    .protocol-tabs {
+        flex-direction: column;
+    }
+
+    .tab-divider {
+        width: 80%;
+        height: 2px;
+    }
+
+    .reference-grid {
+        grid-template-columns: repeat(2, 1fr);
+    }
+
+    .ipv6-info-grid {
+        grid-template-columns: 1fr;
+    }
+
+    .results-grid {
+        grid-template-columns: 1fr;
+    }
+
+    .features-grid {
+        flex-direction: column;
+        align-items: center;
+    }
+
+    .class-buttons {
+        justify-content: center;
+    }
+
+    .app-header {
+        flex-direction: column;
+        gap: 1rem;
+        padding: 1rem;
+    }
+
+    .header-right-section {
+        flex-wrap: wrap;
+        justify-content: center;
+    }
+}
+
+/* Dark Mode */
+body.dark-mode {
+    background: linear-gradient(135deg, #0f0f1a 0%, #1a1a2e 50%, #16213e 100%);
+}
+
+body.dark-mode .app-header,
+body.dark-mode .protocol-tabs,
+body.dark-mode .glass-card,
+body.dark-mode .app-footer {
+    background: rgba(20, 20, 35, 0.95);
+    border-color: rgba(99, 102, 241, 0.2);
+}
+
+body.dark-mode .logo-text .title,
+body.dark-mode .glass-card h2,
+body.dark-mode .concept-card h4,
+body.dark-mode .info-card h4,
+body.dark-mode .special-addr-card h4,
+body.dark-mode .prefix-section h4,
+body.dark-mode .concepts-section h3 {
+    color: #fff;
+}
+
+body.dark-mode .logo-text .subtitle,
+body.dark-mode .input-group label,
+body.dark-mode .result-item .label,
+body.dark-mode .description-text,
+body.dark-mode .feature-text {
+    color: #a1a1aa;
+}
+
+body.dark-mode .tab-btn:not(.active) {
+    color: #a1a1aa;
+}
+
+body.dark-mode .tab-btn:not(.active):hover {
+    background: rgba(99, 102, 241, 0.15);
+    color: #a5b4fc;
+}
+
+body.dark-mode .input-group input,
+body.dark-mode .input-group select,
+body.dark-mode .class-btn {
+    background: rgba(15, 15, 25, 0.8);
+    border-color: rgba(99, 102, 241, 0.3);
+    color: #fff;
+}
+
+body.dark-mode .result-item,
+body.dark-mode .feature-item {
+    background: linear-gradient(135deg, rgba(99, 102, 241, 0.1), rgba(236, 72, 153, 0.05));
+}
+
+body.dark-mode .ref-item,
+body.dark-mode .info-card,
+body.dark-mode .concept-card,
+body.dark-mode .range-card,
+body.dark-mode .special-addr-card,
+body.dark-mode .prefix-item {
+    background: linear-gradient(135deg, rgba(99, 102, 241, 0.15), rgba(236, 72, 153, 0.1));
+}
+
+body.dark-mode tbody tr {
+    border-bottom-color: rgba(99, 102, 241, 0.2);
+}
+
+body.dark-mode tbody tr:hover {
+    background: rgba(99, 102, 241, 0.1);
+}
+
+body.dark-mode td,
+body.dark-mode .concept-card .explanation,
+body.dark-mode .info-card p,
+body.dark-mode .range-card .range-value,
+body.dark-mode .note,
+body.dark-mode .table-note {
+    color: #e2e8f0;
+}
+
+body.dark-mode .app-footer {
+    color: #a1a1aa;
+}
+
+body.dark-mode .cidr-reference-table tbody tr.class-a,
+body.dark-mode .classes-table tbody tr.class-a {
+    background: rgba(59, 130, 246, 0.2);
+}
+
+body.dark-mode .cidr-reference-table tbody tr.class-b,
+body.dark-mode .classes-table tbody tr.class-b {
+    background: rgba(16, 185, 129, 0.2);
+}
+
+body.dark-mode .cidr-reference-table tbody tr.class-c,
+body.dark-mode .classes-table tbody tr.class-c {
+    background: rgba(245, 158, 11, 0.2);
+}
+
+body.dark-mode .classes-table tbody tr.class-d {
+    background: rgba(139, 92, 246, 0.2);
+}
+
+body.dark-mode .classes-table tbody tr.class-e {
+    background: rgba(239, 68, 68, 0.2);
+}
+
+body.dark-mode .range-card.class-a-bg {
+    background: linear-gradient(135deg, rgba(59, 130, 246, 0.25), rgba(59, 130, 246, 0.1));
+}
+
+body.dark-mode .range-card.class-b-bg {
+    background: linear-gradient(135deg, rgba(16, 185, 129, 0.25), rgba(16, 185, 129, 0.1));
+}
+
+body.dark-mode .range-card.class-c-bg {
+    background: linear-gradient(135deg, rgba(245, 158, 11, 0.25), rgba(245, 158, 11, 0.1));
+}
+
+/* Dark mode for FLSM/VLSM */
+body.dark-mode .method-tab:not(.active) {
+    background: linear-gradient(135deg, rgba(99, 102, 241, 0.15), rgba(236, 72, 153, 0.08));
+    border-color: rgba(99, 102, 241, 0.3);
+    color: #e2e8f0;
+}
+
+body.dark-mode .method-tab:not(.active):hover {
+    background: linear-gradient(135deg, rgba(99, 102, 241, 0.25), rgba(236, 72, 153, 0.12));
+}
+
+body.dark-mode .flsm-input-panel,
+body.dark-mode .vlsm-input-panel,
+body.dark-mode .flsm-info-panel,
+body.dark-mode .vlsm-info-panel {
+    background: linear-gradient(135deg, rgba(99, 102, 241, 0.12), rgba(236, 72, 153, 0.06));
+    border-color: rgba(99, 102, 241, 0.25);
+}
+
+body.dark-mode .flsm-input-panel h3,
+body.dark-mode .vlsm-input-panel h3,
+body.dark-mode .flsm-info-panel h3,
+body.dark-mode .vlsm-info-panel h3,
+body.dark-mode .flsm-results h3,
+body.dark-mode .vlsm-results h3,
+body.dark-mode .comparison-section h3,
+body.dark-mode .comparison-card h4 {
+    color: #fff;
+}
+
+body.dark-mode .req-toggle-btn:not(.active) {
+    background: rgba(15, 15, 25, 0.8);
+    border-color: rgba(99, 102, 241, 0.3);
+    color: #e2e8f0;
+}
+
+body.dark-mode #vlsm-requirements {
+    background: rgba(15, 15, 25, 0.8);
+    border-color: rgba(99, 102, 241, 0.3);
+    color: #fff;
+}
+
+body.dark-mode .vlsm-note {
+    background: rgba(16, 185, 129, 0.15);
+    border-color: rgba(16, 185, 129, 0.4);
+}
+
+body.dark-mode .comparison-card {
+    border-color: rgba(99, 102, 241, 0.25);
+}
+
+body.dark-mode .flsm-card {
+    background: linear-gradient(135deg, rgba(59, 130, 246, 0.15), rgba(59, 130, 246, 0.05));
+}
+
+body.dark-mode .vlsm-card {
+    background: linear-gradient(135deg, rgba(16, 185, 129, 0.15), rgba(16, 185, 129, 0.05));
+}
+
+body.dark-mode .comparison-card li,
+body.dark-mode .info-label,
+body.dark-mode .vlsm-note p,
+body.dark-mode .flsm-vlsm-section .section-description {
+    color: #a1a1aa;
+}
+
+/* Responsive FLSM/VLSM */
+@media (max-width: 768px) {
+    .method-tabs {
+        flex-direction: column;
+    }
+
+    .flsm-grid,
+    .vlsm-grid {
+        grid-template-columns: 1fr;
+    }
+
+    .comparison-grid {
+        grid-template-columns: 1fr;
+    }
+
+    .vlsm-table {
+        font-size: 0.75rem;
+    }
+
+    .vlsm-table th,
+    .vlsm-table td {
+        padding: 0.4rem 0.25rem;
+    }
+
+    .ipv6-subnet-grid {
+        grid-template-columns: 1fr;
+    }
+}
+
+/* =============================================
+   IPv6 Prefix Subnetting Calculator Styles
+   ============================================= */
+
+.ipv6-subnet-grid {
+    display: grid;
+    grid-template-columns: 1fr 1fr;
+    gap: 1.5rem;
+    margin-bottom: 1.5rem;
+}
+
+.ipv6-subnet-input-panel,
+.ipv6-subnet-info-panel {
+    padding: 1.5rem;
+    background: linear-gradient(135deg, rgba(139, 92, 246, 0.05), rgba(59, 130, 246, 0.03));
+    border-radius: 16px;
+    border: 1px solid var(--border-color);
+}
+
+.ipv6-subnet-input-panel h3,
+.ipv6-subnet-info-panel h3 {
+    font-size: 1.1rem;
+    margin-bottom: 1rem;
+    color: var(--text-primary);
+}
+
+/* IPv6 Subnet Results */
+.ipv6-subnet-results {
+    margin-top: 1.5rem;
+    animation: fadeIn 0.3s ease;
+}
+
+.ipv6-subnet-results h3 {
+    font-size: 1.1rem;
+    margin-bottom: 1rem;
+    color: var(--text-primary);
+}
+
+/* Pagination Controls */
+.ipv6-pagination {
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    gap: 0.5rem;
+    margin-bottom: 1rem;
+    flex-wrap: wrap;
+}
+
+.pagination-btn {
+    padding: 0.5rem 1rem;
+    background: linear-gradient(135deg, rgba(99, 102, 241, 0.1), rgba(236, 72, 153, 0.05));
+    border: 2px solid var(--border-color);
+    border-radius: 8px;
+    font-size: 0.85rem;
+    font-weight: 600;
+    cursor: pointer;
+    transition: all 0.3s ease;
+    color: var(--text-primary);
+}
+
+.pagination-btn:hover:not(:disabled) {
+    background: linear-gradient(135deg, var(--primary), var(--accent));
+    color: white;
+    border-color: transparent;
+}
+
+.pagination-btn:disabled {
+    opacity: 0.5;
+    cursor: not-allowed;
+}
+
+.pagination-info {
+    padding: 0.5rem 1rem;
+    background: var(--bg-card);
+    border-radius: 8px;
+    font-size: 0.85rem;
+    font-weight: 600;
+    color: var(--primary);
+}
+
+/* IPv6 Subnet Table */
+.ipv6-subnet-table {
+    width: 100%;
+    border-collapse: collapse;
+    font-size: 0.8rem;
+}
+
+.ipv6-subnet-table th {
+    padding: 0.75rem 0.5rem;
+    text-align: center;
+    white-space: nowrap;
+}
+
+.ipv6-subnet-table td {
+    padding: 0.6rem 0.5rem;
+    text-align: center;
+    font-family: 'JetBrains Mono', monospace;
+    font-size: 0.75rem;
+    word-break: break-all;
+}
+
+/* SLAAC Warning Styles */
+#ipv6s-slaac-status {
+    font-weight: 700;
+}
+
+.slaac-compatible {
+    color: var(--success) !important;
+}
+
+.slaac-incompatible {
+    color: var(--danger) !important;
+}
