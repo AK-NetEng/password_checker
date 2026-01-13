@@ -1,6 +1,6 @@
 <div align="center">
 
-  <h1>🛡️ Network & Security Suite</h1>
+  <h1>🛡️ Security Suite</h1>
 
   <p>
     <img src="https://img.shields.io/badge/Version-1.0.0-blue?style=for-the-badge" alt="Version">
@@ -110,5 +110,4 @@ password_checker/
 │
 ├── 📄 index.html        # Main Application
 └── 📄 README.md         # Documentation (You are here)
-
 
