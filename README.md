@@ -1,63 +1,99 @@
-# 🛡️ Network & Security Utility Suite
-## 🚀 Features
+<div align="center">
 
-This project consists of two main modules accessible via a toggle switch:
+  <h1>🛡️ Network & Security Suite</h1>
 
-### 1. 🌐 IP Subnet Calculator (VLSM/FLSM)
-A comprehensive tool for network addressing and planning.
-* **Dual Mode Subnetting:** Supports both **FLSM** (Fixed Length Subnet Mask) and **VLSM** (Variable Length Subnet Mask).
-* **Detailed Network Analysis:** Instantly calculates:
-    * Network Address & Broadcast Address
-    * Usable Host IP Range
-    * Wildcard Mask & Subnet Mask
-    * Binary Representations
-* **Visual Charts:** Includes a subnetting map/chart for quick reference.
-* **Class Support:** Quick selection for Class A, B, and C networks.
+  <p>
+    <img src="https://img.shields.io/badge/Version-1.0.0-blue?style=for-the-badge" alt="Version">
+    <img src="https://img.shields.io/badge/License-MIT-green?style=for-the-badge" alt="License">
+    <img src="https://img.shields.io/badge/Made%20with-Love%20%26%20Code-red?style=for-the-badge" alt="Made with Love">
+    <img src="https://img.shields.io/badge/Maintained%3F-Yes-success?style=for-the-badge" alt="Maintained">
+  </p>
+  
+  <h3>
+    A powerful toolkit for <span style="color: #2b95ff;">Network Engineering</span> & <span style="color: #ff4b4b;">Cyber Security</span>.
+  </h3>
 
-### 2. 🔐 Password Strength Analyzer & Generator
-A security tool to evaluate and enhance credential safety.
-* **Real-time Analysis:** analyzing password entropy instantly as you type.
-* **Crack Time Estimation:** Estimates how long it would take for a computer to brute-force the password (e.g., "Instantly", "2 Centuries").
-* **Data Breach Check:** Cross-references the password against known data breaches to ensure it hasn't been compromised.
-* **Smart Feedback:** Provides a checklist for security requirements (Uppercase, Lowercase, Special Characters, Length).
-* **Secure Password Generator:** Generates cryptographically strong passwords with customizable length and character sets.
+  <p>
+    <a href="#-features">Features</a> •
+    <a href="#-screenshots">Screenshots</a> •
+    <a href="#-how-to-run">How To Run</a> •
+    <a href="#-author">Author</a>
+  </p>
+
+  <br>
+
+</div>
 
 ---
 
-## 🛠️ Tech Stack
-* **Frontend:** HTML5, CSS3, JavaScript (or React/Next.js - *Update if using a framework*)
-* **Logic:** Python (Flask/Django) or Pure JavaScript (*Choose based on your code*)
-* **Styling:** Modern UI with CSS Gradients and Flexbox/Grid.
+## 🧐 What is this?
+This is an **All-in-One Utility** designed to simplify complex calculations for students and professionals. It features a seamless **Toggle Interface** to switch between two core modules:
+1.  **Network Operations:** Advanced Subnetting (VLSM/FLSM).
+2.  **Security Operations:** Password Strength & Breach Analysis.
+
+---
+
+## 🚀 Features
+
+<table align="center">
+  <tr>
+    <td align="center" width="50%">
+      <h3>🌐 IP Subnet Calculator</h3>
+    </td>
+    <td align="center" width="50%">
+      <h3>🔐 Password Security Tool</h3>
+    </td>
+  </tr>
+  <tr>
+    <td>
+      <ul>
+        <li>✅ <strong>Dual Mode:</strong> VLSM & FLSM Support</li>
+        <li>✅ <strong>Visuals:</strong> Dynamic Subnet Charts</li>
+        <li>✅ <strong>Details:</strong> Network ID, Broadcast, & Host Range</li>
+        <li>✅ <strong>Classful:</strong> Quick presets for Class A, B, C</li>
+      </ul>
+    </td>
+    <td>
+      <ul>
+        <li>✅ <strong>Entropy Check:</strong> Real-time bit strength analysis</li>
+        <li>✅ <strong>Crack Time:</strong> Estimates Brute-force time</li>
+        <li>✅ <strong>Breach Database:</strong> Checks leaked passwords</li>
+        <li>✅ <strong>Generator:</strong> Creates unhackable credentials</li>
+      </ul>
+    </td>
+  </tr>
+</table>
 
 ---
 
 ## 📸 Screenshots
 
-| **Subnet Calculator** | **Password Analyzer** |
-|:---------------------:|:---------------------:|
-| ![Subnetting UI](subnnting-calculator.jpg) | ![Password UI](password-analyzer.jpg) |
-| *Handles complex VLSM/FLSM calculations* | *Checks strength, entropy, and breaches* |
-
-*(Note: Make sure to upload the images to your repository and update the filenames above)*
+<div align="center"> 
+  <img src="assets/images/subnnting-calculator.jpg" alt="Subnet Calculator" width="45%">
+  <img src="assets/images/password-analyzer.jpg" alt="Password Analyzer" width="45%">
+  <p><em>(Left: Subnet Calculator Interface | Right: Password Strength Analyzer)</em></p>
+</div>
 
 ---
 
-## 💻 How to Run Locally
+## 🛠️ Tech Stack
 
-1.  **Clone the repository:**
-    ```bash
-    git clone [https://github.com/YOUR-USERNAME/REPO-NAME.git](https://github.com/YOUR-USERNAME/REPO-NAME.git)
-    ```
-2.  **Navigate to the project directory:**
-    ```bash
-    cd REPO-NAME
-    ```
-3.  **Open the application:**
-    * Simply open `index.html` in your browser.
-    * *(Or if using Python)*: Run `python app.py` and visit `http://localhost:5000`
+| Frontend | Logic | Styling |
+| :---: | :---: | :---: |
+| ![HTML5](https://img.shields.io/badge/-HTML5-E34F26?style=flat&logo=html5&logoColor=white) | ![JavaScript](https://img.shields.io/badge/-JavaScript-F7DF1E?style=flat&logo=javascript&logoColor=black) | ![CSS3](https://img.shields.io/badge/-CSS3-1572B6?style=flat&logo=css3&logoColor=white) |
 
-## 🤝 Contribution
-Contributions are welcome! Feel free to submit a Pull Request.
+---
 
-## 📜 License
-This project is open-source and available under the MIT License.
+## 💻 How to Run
+
+You can run this project locally in 3 simple steps:
+
+```bash
+# 1. Clone the repository
+git clone [https://github.com/YOUR-USERNAME/REPO-NAME.git](https://github.com/YOUR-USERNAME/REPO-NAME.git)
+
+# 2. Navigate to directory
+cd REPO-NAME
+
+# 3. Open the file
+# Simply double-click 'index.html' to launch in browser!
